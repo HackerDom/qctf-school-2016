@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+      <div class="container">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        <h1>Привет, холоп!</h1>
+        <p>Это самая крутая игра в мире. Круче нет. Поверь. Тут ты должен платить большие налоги своему королю с самого рождения, пока не кончатся деньги! Круто, правда? А если Боженька позволит, ты сможешь стать королем, накопить достаточно золота и купить самый важный секрет в этой вселенной.</p>
+        <p><a class="btn btn-primary btn-lg" href="{{ url_for('register') }}" role="button">Родиться &raquo;</a></p>
+      </div>
+</div>
+
+
+    <div class="container">
+      <footer>
+        <p>&copy; Игорян Corp. Все права надежно зашифрованы случайным ключом случайной длины случайное число раз.</p>
+      </footer>
+    </div> <!-- /container -->
+
+{% endblock %}
