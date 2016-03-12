@@ -20,7 +20,7 @@ login_manager = LoginManager()
 login_manager.session_protection = "strong"
 login_manager.login_view = "index"
 login_manager.init_app(app)
-app.config["SECRET_KEY"] = "TheBestGameInTheWorld"
+app.config["SECRET_KEY"] = "QCTF_d561499418f345c491cce265067d0b0f"
 
 
 class User(db.Model, UserMixin):
