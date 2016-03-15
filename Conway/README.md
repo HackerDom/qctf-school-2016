@@ -24,7 +24,9 @@ Conway
 ------------------------
 Первым делом скачаем программу life-gen для генерации синтезатора флага (см. ссылки). Генерируем flag_writer.rle:
 ```
-./life-gen -s QCTF_FLAG flag_writer.rle
+pushd life-gen
+life.rb -s QCTF_FLAG ../flag_writer.rle
+popd
 ```
 Преобразуем в матрицу:
 ```
