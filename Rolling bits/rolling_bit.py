@@ -33,11 +33,11 @@ def transonate(data):
             charbits = []
             for j in range(8):
                 charbits.append(transponMatrix[j][i])
-            byteArr.append(chr(int(''.join(charbits),2)))
-        result = ''.join(byteArr)
+            byteArr.append(int(''.join(charbits),2))
+        result = bytes(byteArr)
         transponData.append(result)
         print(len(result))
-    return ''.join(transponData).encode()
+    return b''.join(transponData)
         
 
 def print_matrix(matrix):
@@ -53,7 +53,7 @@ def generate_binary_matrix(bytestring):
     for i in range(8):
         bytemap.append([])
         for j in range(8):
-            bytemap[i].append('')
+            bytemap[i].append('\x00')
     for i in range(len(bytestring)):
         bitstring = "00000000"[:8-len(bin(bytestring[i])[2:])] + bin(bytestring[i])[2:]
         for j in range(len(bitstring)):
