@@ -8,15 +8,20 @@ def main():
     IP = "127.0.0.1"
     PORT = 8800
     ADDR = (IP,PORT)
-    sock = socket()
-    sock.bind(ADDR)
-    sock.listen(1)
-    conn, address = sock.accept()
     while 1:
-        data = conn.recv(65545)
-        if not data:
-            break
-        print(transponate(data))
+        sock = socket()
+        sock.bind(ADDR)
+        sock.listen(1)
+        conn, address = sock.accept()
+        data = b'\x00'
+        while data:
+            try:
+                data = conn.recv(65545)[:-1]
+                if data:
+                    conn.send(transponate(data)+b'\n')
+            except:
+                pass
+
 
 
 def transponate(data):
