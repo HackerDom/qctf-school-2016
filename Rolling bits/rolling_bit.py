@@ -5,19 +5,21 @@ from socket import socket
 
 
 def main():
-    IP = ""
+    IP = "127.0.0.1"
     PORT = 8800
     ADDR = (IP,PORT)
     sock = socket()
     sock.bind(ADDR)
+    sock.listen(1)
+    conn, address = sock.accept()
     while 1:
-        data = sock.recvfrom(65545)
+        data = conn.recv(65545)
         if not data:
             break
         print(transponate(data))
 
 
-def transonate(data):
+def transponate(data):
     transponData = []
     for i in range(0,len(data),8):
         octet = data[i:i+8] + b"\x00\x00\x00\x00\x00\x00\x00\x00"[:8-len(data[i:i+8])]
@@ -36,7 +38,6 @@ def transonate(data):
             byteArr.append(int(''.join(charbits),2))
         result = bytes(byteArr)
         transponData.append(result)
-        print(len(result))
     return b''.join(transponData)
         
 
