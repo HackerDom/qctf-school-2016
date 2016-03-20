@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import os
 import re
-
 import time
 
 __author__ = 'Trofimov Igor'
