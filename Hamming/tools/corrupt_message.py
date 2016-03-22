@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
 import random
-with open('original_message.bin', 'rb') as message_file:
+import sys
+
+
+with open(sys.argv[1], 'rb') as message_file:
     message = bytearray(message_file.read())
 
 i = 4*8 + 15 * 200  # skip size and header of image
@@ -12,5 +15,5 @@ while i + 15 < len(message) * 8:
     message[byte_index] ^= (1 << (7 - bit_index))
     i += 15
 
-with open('message.bin', 'wb') as message_file:
+with open(sys.argv[2], 'wb') as message_file:
     message_file.write(message)

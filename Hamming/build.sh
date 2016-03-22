@@ -9,7 +9,7 @@ echo "Start building"
 echo
 
 echo " 1) Prepare image (add description text)"
-./tools/prepare_image.py $1
+./tools/prepare_image.py $1 target_image.bmp
 if [ $? -ne 0 ]; then
 	echo "[-] Fail"
 	exit
@@ -32,7 +32,7 @@ else
 fi
 
 echo " 3) Corrupt encoded image"
-./tools/corrupt_message.py
+./tools/corrupt_message.py original_message.bin message.bin
 if [ $? -ne 0 ]; then
 	echo "[-] Fail"
 	exit
@@ -41,7 +41,7 @@ else
 fi
 
 echo " 4) Check corrupted image"
-solution=$(./tools/check.py)
+solution=$(./tools/check.py message.bin)
 if [[ "$flag" != "$solution" ]]; then
 	echo "[-] Different flags!"
 	exit

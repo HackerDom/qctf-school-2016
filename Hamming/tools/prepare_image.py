@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import sys
-import hashlib
 from PIL import Image, ImageFont, ImageDraw
 
 
@@ -21,4 +20,4 @@ x = (width - text_width) // 2
 y = (height - text_height) // 2
 draw.text((x, y), MESSAGE, font=font)
 
-image.save('target_image.bmp', 'BMP')
+image.save(sys.argv[2], 'BMP')

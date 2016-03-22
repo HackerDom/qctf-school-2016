@@ -3,7 +3,7 @@ class HammingDecoder:
     def __init__(self, n, k):
         m = n - k
         if 2**m - 1 != n or 2**m - m - 1 != k:
-            raise Exception('unsupportedd hamming code')
+            raise Exception('unsupported hamming code')
         self.n = n
         self.k = k
 
@@ -64,18 +64,19 @@ class HammingDecoder:
 
     def decode(self, msg):
         piece_nth = 0
-        L = self.n
+        length = self.n
         result = []
         while True:
-            piece = msg[piece_nth*L:piece_nth*L + L]
-            if len(piece) < L:
+            piece = msg[piece_nth*length:(piece_nth + 1)*length]
+            if len(piece) < length:
                 break
             result.extend(self.decode_block(piece))
             piece_nth += 1
         return result
 
     def decode_msg(self, msg):
-        binary = list(map(int, ''.join([format(x, 'b').zfill(8) for x in msg])))
+        binary = \
+            list(map(int, ''.join([format(x, 'b').zfill(8) for x in msg])))
         decoded_binary = self.decode(binary)
         i = 0
         result = bytearray()
@@ -83,5 +84,3 @@ class HammingDecoder:
             result.append(int(''.join(map(str, decoded_binary[i:i+8])), 2))
             i += 8
         return result
-
-
