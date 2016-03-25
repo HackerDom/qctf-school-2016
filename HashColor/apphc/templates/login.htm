@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" style="height:100%;" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>Hashcolor Login Form</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="pinegrow, blocks, bootstrap">
+        <meta name="description" content="My new website">
+        <link rel="shortcut icon" href="http://127.0.0.1:40000/file:///C:/Program%20Files%20%28x86%29/Pinegrow%20Web%20Designer/frameworks/blocks/template/ico/favicon.png" data-pg-id="4536">
+        <!-- Core CSS -->
+        <link href="{{url_for('static', filename='css/bootstrap.css')}}" rel="stylesheet" data-pg-id="4537">
+        <link href="{{url_for('static', filename='css/font-awesome.css')}}" rel="stylesheet" data-pg-id="4538">
+        <link href="{{url_for('static', filename='css/css.css')}}" rel="stylesheet" data-pg-id="4539">
+        <link href="{{url_for('static', filename='css/css_002.css')}}" rel="stylesheet" data-pg-id="4540">
+        <!-- Style Library -->
+        <link href="{{url_for('static', filename='css/style-library-1.css')}}" rel="stylesheet" data-pg-id="4541">
+        <link href="{{url_for('static', filename='css/plugins.css')}}" rel="stylesheet" data-pg-id="4542">
+        <link href="{{url_for('static', filename='css/blocks.css')}}" rel="stylesheet" data-pg-id="4543">
+        <link href="{{url_for('static', filename='css/custom.css')}}" rel="stylesheet" data-pg-id="4544">
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+        <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <script style="" src="{{url_for('static', filename='js/common.js')}}" charset="UTF-8" type="text/javascript"></script>
+    <script src="{{url_for('static', filename='js/util.js')}}" charset="UTF-8" type="text/javascript"></script>
+    <script src="{{url_for('static', filename='js/stats.js')}}" charset="UTF-8" type="text/javascript"></script></head>
+    <body data-spy="scroll" data-target="nav">
+        <section id="promo-1" class="content-block promo-1 min-height-600px bg-offwhite">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <img src="{{url_for('static', filename='img/hash.png')}}" class="img-responsive" data-pg-id="4592">
+                        <p>Hashcolor — сайт для любителей цветов и флагов</p>
+                        <!---->
+                        <!---->
+                        <form method="post" action="" name="register">
+                            {{form.hidden_tag()}}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <!--<input class="form-control" placeholder="Логин" name='login' type="text">-->
+                                        Login
+                                        {{form.login(size=64, class_="form-control")}}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <!--<input placeholder="Пароль" class="form-control" name='password' type="text">-->
+                                        Password
+                                        {{form.password(size=64, class_="form-control")}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--<input class="form-control" placeholder="Инвайт (необязательно)" name='invite' type="file">-->
+                        <input class="btn btn-primary btn-block" type="submit" value="Login Now!" />
+                        </form>
+                        <!---->
+                        <!---->
+                        <!-- <a  href="/"></a> -->
+                    </div>
+                    <!-- /.col -->
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </section>
+        <script type="text/javascript" src="{{url_for('static', filename='js/jquery-1.js')}}" data-pg-id="4546"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap.js')}}" data-pg-id="4547"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='js/plugins.js')}}" data-pg-id="4548"></script>
+        <script src="{{url_for('static', filename='js/js.js')}}" data-pg-id="4549"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='js/bskit-scripts.js')}}" data-pg-id="4550"></script>
+
+
+</body></html>
