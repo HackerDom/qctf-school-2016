@@ -3,8 +3,8 @@ from app import app, db
 from app.models import User
 from hashlib import md5
 
-salt = "5A17"
-flag = "QCTF_cfc0fd7bf6aa8dede9f22dc1d9747323"
+salt = "****"
+flag = "*************************************"
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET'])
