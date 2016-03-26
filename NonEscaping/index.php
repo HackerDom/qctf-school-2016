@@ -14,14 +14,14 @@ if (isset($_REQUEST['serial'])){
         $serial = substr($serial, 0, 19);
     }
 
-    $query = "SELECT * FROM codes WHERE serial='".$serial."' AND username='".$username."'";
+    $query = "SELECT * FROM users WHERE serial='$serial' AND username='$username'";
     $result = $mysqli->query($query);
     if ($result){
         if ($result->num_rows > 0){
             $row = $result->fetch_assoc();
             $license_key = $row["license_key"];
         } else {
-            $error = "Неверный серийный номер";
+            $error = "Неверный серийный номер или имя пользователя";
         }
     } else {
         $error = $mysqli->error;

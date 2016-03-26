@@ -22,7 +22,9 @@
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
-    <script style="" src="{{url_for('static', filename='js/common.js')}}" charset="UTF-8" type="text/javascript"></script><script src="register_files/util.js" charset="UTF-8" type="text/javascript"></script><script src="register_files/stats.js" charset="UTF-8" type="text/javascript"></script></head>
+    <script style="" src="{{url_for('static', filename='js/common.js')}}" charset="UTF-8" type="text/javascript"></script>
+    <script src="{{url_for('static', filename='js/util.js')}}" charset="UTF-8" type="text/javascript"></script>
+    <script src="{{url_for('static', filename='js/stats.js')}}" charset="UTF-8" type="text/javascript"></script></head>
     <body data-spy="scroll" data-target="nav">
         <section id="promo-1" class="content-block promo-1 min-height-600px bg-offwhite">
             <div class="container">
@@ -32,23 +34,30 @@
                         <p>Hashcolor — сайт для любителей цветов и флагов</p>
                         <!---->
                         <!---->
-                        <form method="get" action="">
+                        <form method="post" action="" name="register" enctype="multipart/form-data">
+                            {{form.hidden_tag()}}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Логин" name='login' type="text">
+                                        <!--<input class="form-control" placeholder="Логин" name='login' type="text">-->
+                                        Login
+                                        {{form.login(size=64, class_="form-control")}}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input placeholder="Пароль" class="form-control" name='password' type="text">
+                                        <!--<input placeholder="Пароль" class="form-control" name='password' type="text">-->
+                                        Password
+                                        {{form.password(size=64, class_="form-control")}}
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Кто вас пригласил (необязательно)" name='inviter' type="text">
-                            </div>
-                            <input class="form-control" placeholder="Инвайт (необязательно)" name='invite' type="file">
+                            <!--<div class="form-group">-->
+                                <!--&lt;!&ndash;<input class="form-control" placeholder="Кто вас пригласил (необязательно)" name='referral' type="text">&ndash;&gt;-->
+                            <!--</div>-->
+                            Invite
+                            {{form.invite}}
+                            <!--<input class="form-control" placeholder="Инвайт (необязательно)" name='invite' type="file">-->
                         <input class="btn btn-primary btn-block" type="submit" value="Register Now!" />
                         </form>
                         <!---->
