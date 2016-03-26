@@ -20,6 +20,7 @@ def login():
     hash_password = md5((password + salt).encode()).hexdigest()
     user = User.query.filter_by(login=username, password=hash_password).first() # не забыть закрыть анонимный доступ в дб
     if user is not None:
+        # у администратора должен быть сложный пароль! ни в коем случае не ставьте легкоподбираемые пароли, которые есть в словарях в интернете.
         if username == 'admin':
             session['flag'] = flag
         else:
