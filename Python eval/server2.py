@@ -8,6 +8,6 @@ while True:
     conn, addr = sock.accept()
     data = conn.recv(1024)
 
-    res = str(eval(data, {}))
+    res = str(eval(data, {'__builtins__':{}}))
     conn.send(res.encode('utf8'))
     conn.close()
