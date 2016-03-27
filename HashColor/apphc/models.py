@@ -1,7 +1,4 @@
 from apphc import db
-#
-# ROLE_USER = 0
-# ROLE_ADMIN = 1
 
 
 class User(db.Model):
@@ -11,7 +8,9 @@ class User(db.Model):
     referral = db.Column(db.String(64), index=True)
     count = db.Column(db.SmallInteger)
     userhash = db.Column(db.String(32))
-    flag = db.Column(db.Boolean)
+    flag = db.Column(db.Boolean, default=False)
+    authenticated = db.Column(db.Boolean, default=False)
+    show = db.Column(db.Boolean, default=False)
 
     def __init__(self, login, password, referral, count, userhash, flag):
         self.login = login
@@ -22,5 +21,17 @@ class User(db.Model):
         self.flag = flag
 
     def __repr__(self):
-        return "<User(login='{}', password='{}', referral='{}', count='{}', userhash='{}', flag='{}')>".\
+        return "<User(login='{}', password='{}', referral='{}', count='{}', userhash='{}', flag='{}')>". \
             format(self.login, self.password, self.referral, self.count, self.userhash, self.flag)
+
+    def is_authenticated(self):
+        return self.authenticated
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id

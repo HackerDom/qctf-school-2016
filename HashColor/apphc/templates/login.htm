@@ -51,6 +51,13 @@
                                         {{form.password(size=64, class_="form-control")}}
                                     </div>
                                 </div>
+                                {% if text %}
+                                <div class="col-md-12">
+                                    <p style="color:red;">
+                                        {{text}}
+                                    </p>
+                                </div>
+                                {% endif %}
                             </div>
 
                             <!--<input class="form-control" placeholder="Инвайт (необязательно)" name='invite' type="file">-->

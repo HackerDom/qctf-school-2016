@@ -4,13 +4,9 @@
 # SQLAlchemy
 # python-flask
 
-# from flask import Flask, render_template, request, make_response, redirect
-# from flask.ext.sqlalchemy import SQLAlchemy
 from PIL import Image
 from io import BytesIO
-from werkzeug.utils import secure_filename
 import base64
-# import bleach
 import hashlib
 
 
@@ -36,20 +32,19 @@ def generate_image(string):
     img.putdata(data, 1, 0)
     buff = BytesIO()
     img.save(buff, format="PNG")
-    return base64.b64encode(buff.getvalue())
-    # img.save("static/img/user/" + login + ".png")
+    return base64.b64encode(buff.getvalue()).decode()
 
 
-def get_hash_part(b64data):
-    img = Image.open(BytesIO(base64.b64decode(b64data))) #Image.open('static/img/user/' + img, 'RGBA')
+def get_hash_part(raw_data):
+    img = Image.open(raw_data) #Image.open('static/img/user/' + img, 'RGBA')
     data = img.getdata()[0]
-    hashcolor = str(hex(data[0])) + str(hex(data[1])) + str(hex(data[2])) + str(hex(data[3]))
+    hashcolor = str(hex(data[0])[2:] + hex(data[1])[2:] + hex(data[2])[2:] + hex(data[3])[2:])
     return hashcolor
 
-#
-# def get_file_data(form):
-#     filename = secure_filename(form.invite.file.filename)
-#     buff = BytesIO()
-#     form.invite.file.save(buff)
-#     print(buff)
-#     return buff
+
+def get_file_data(invite):
+    buff = BytesIO()
+    invite.save(buff)
+    buff.seek(0)
+    # print(buff)
+    return buff

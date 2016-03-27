@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Starter Template for Bootstrap</title>
+        <title>Hashcolor main page</title>
         <!-- Bootstrap core CSS -->
         <link href="{{url_for('static', filename='css/bootstrap.css')}}" rel="stylesheet" data-pg-id="4689">
         <!-- Custom styles for this template -->
@@ -59,17 +59,29 @@
                 </div>
                 <div class="col-md-4">
                     {% if login %}
-                    <h2 style="display: block;">Осталось {{count}} инвайтов</h2>
+                    <h2 style="display: block;">Осталось инвайтов: {{count}}</h2>
                     <a class="btn btn-success" data-html="false" href="/image/">Получить инвайт</a>
+                    <a class="btn btn-success" data-html="false" href="/logout/">Выйти</a>
+
                     {% else %}
                     <a class="btn btn-success" data-html="false" href="/registration/">Регистрация</a>
                     <a class="btn btn-success" data-html="false" href="/login/">Вход</a>
                     {% endif %}
                 </div>
+                {% if text %}
+                <div class="col-md-4">
+                    {{text}}</br>
+                    {% if img %}
+                    <img src="data:image/png;base64,{{img}}" alt="Invite">
+                    {% endif %}
+                </div>
+                {% endif %}
+
             </div>
+
             {% if flag %}
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12" style="text-align:center;">
                     <p>{{flag}}</p>
                 </div>
             </div>

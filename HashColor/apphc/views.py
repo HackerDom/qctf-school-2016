@@ -1,94 +1,85 @@
-from flask import render_template, request, make_response, redirect
-from apphc import app, db, models, forms
+from flask import render_template, make_response, redirect
+from apphc import app, db, models, forms, lm
+from flask_login import login_user, current_user, logout_user, login_required
 from apphc.scripts import *
 
 
 @app.route('/')
 @app.route('/index/')
-@app.route('/home/')
 def main():
-    login = request.cookies.get('login')
-    flag = ''
-    resp = make_response(render_template("main.htm", flag=flag))
+    resp = make_response(render_template("main.htm"))
+    if current_user.is_anonymous != True:
 
-    # if login:
-    #     users = models.User.query.all()
-    #     for u in users:
-    #         if u.login == login
-        # password = request.args.get('password')
-        # count = request.cookies.get('count')
-        # if int(count) <= 0:
-        #     count = '0'
-        # resp = make_response(render_template("main.htm", login=login, count=count))
-        # inviter = request.cookies.get('inviter')
-        # invite = request.cookies.get('invite')
-        # if invite and inviter:
-        #     inviter_hash = separate_blocks(get_md5_hex(inviter))[-1]
-        #     if inviter_hash == get_hash_part(invite):
-        #         resp = make_response(render_template("main.htm", flag='invite'))
+        count = current_user.count
+        kwargs = dict()
+        kwargs.setdefault('login', current_user.login)
 
-        # resp.set_cookie('user', get_md5_hex(login)[10][::-1])
-        # resp.set_cookie('inviter', get_md5_hex(inviter)[6*4][::-1])
+        if current_user.show:
+            current_user.show = False
+            db.session.commit()
+            text = 'Invite:'
+            img = None
+            if count > 0:
+                img = generate_image(separate_blocks(current_user.userhash)[3 - count])
+                current_user.count -= 1
+                count = current_user.count
+                db.session.commit()
+            else:
+                text = 'You have no invites!'
+
+            if img:
+                kwargs.setdefault('img', img)
+
+            kwargs.setdefault('text', text)
+
+        kwargs.setdefault('count', count)
+
+        if current_user.flag:
+            kwargs.setdefault('flag', 'You won!')
+
+        resp = make_response(render_template("main.htm", **kwargs))
 
     return resp
 
-#
-# @app.route('/image/')
-# def get_image():
-#     login = request.cookies.get('login')
-#     count = request.cookies.get('count')
-#     if login and count and (int(count) >= 1):
-#         # has a problem with file / count / else
-#         response = make_response(render_template("image.html", image=login+str(int(count)-1)))
-#         response.set_cookie('count', int(count) - 1)
-#         return response
-#     return render_template("image.html")
+
+@app.route('/image/', methods=['GET'])
+def get_image():
+    current_user.show = True
+    db.session.commit()
+    return redirect('/')
 
 
 @app.route('/registration/', methods=['POST', 'GET'])
 def registration():
     form = forms.RegistrationForm()
-    # if login:
-    #     password = request.args.get('password')
-    #     referral = request.args.get('referral')
-    #     invite = request.args.get('invite')
-    #     flag = False
-    #     userhash = get_md5_hex(login)
-    #     if get_hash_part(invite) == separate_blocks(get_md5_hex(referral))[-1]:
-    #         flag = True
-    #     # users = models.User.query.all()
-    #     # for u in users:
-    #     #     if u.login == login:
-    #     #         return render_template("registration.htm", already_in=True)
-    #     user = models.User(login, password, referral, 4, userhash, flag)
-    #     db.session.add(user)
-    #     db.session.commit()
-    #     redirect_to_index = redirect('/index/')
-    #     response = app.make_response(redirect_to_index)
-    #     response.set_cookie('login', login)
+
     if form.validate_on_submit():
         login = form.login.data
         password = form.password.data
         invite = form.invite.data
-        # filename = secure_filename(form.invite.data)
-        # print(form.invite.raw_data)
-        # print(invite)
-        # for i in request.files:
-        #     print(i)
+        userhash = get_md5_hex(login)
+        flag = False
 
+        if (invite.filename):
+            file = get_file_data(invite)
+            hashcolor = get_hash_part(file)
+            invite = hashcolor
+            users = models.User.query.all()
+            for u in users:
+                if hashcolor == separate_blocks(u.userhash)[-1]:
+                    flag = True
+        else:
+            invite = None
 
-        # print(request.files[invite])
+        if models.User.query.filter_by(login=login).first():
+            return render_template("registration.htm", form=form, text="Login already in use!")
 
+        user = models.User(login, password, invite, 3, userhash, flag)
+        db.session.add(user)
+        db.session.commit()
 
-        # print('fuck')
-        # file = request.files[form.invite.data].read()
-        # print(file)
-        print(dir(invite))
-        print(type(invite))
-        # todo:save file from invite to BytesIO
-        # todo:add a correct login system
-        print('register', login, password, invite)
-        return redirect('/index')
+        return redirect('/login/')
+
     return render_template("registration.htm", form=form)
 
 
@@ -96,10 +87,29 @@ def registration():
 def login():
     form = forms.LoginForm()
     if form.validate_on_submit():
-
-        # flash('Login requested for login="' + form.login.data + '", password=' + str(form.password.data))
         login = form.login.data
         password = form.password.data
-        print('login', login, password)
-        return redirect('/index')
+        user = models.User.query.filter_by(login=login, password=password).first()
+        if user:
+            user.authenticated = True
+            db.session.commit()
+            login_user(user, remember=True)
+            return redirect('/')
+        else:
+            return render_template("login.htm", form=form, text="Wrong login/password!")
     return render_template("login.htm", form=form)
+
+
+@lm.user_loader
+def user_loader(user_id):
+    return models.User.query.get(user_id)
+
+
+@app.route('/logout/', methods=['GET'])
+@login_required
+def logout():
+    user = current_user
+    user.authenticated = False
+    db.session.commit()
+    logout_user()
+    return redirect('/')
