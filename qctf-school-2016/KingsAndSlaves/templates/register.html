@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+<div class="jumbotron">
+      <div class="container">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        <h1>Регистрация</h1>
+        {{ wtf.quick_form(register_form) }}
+      </div>
+</div>
+
+
+    <div class="container">
+      <footer>
+        <p>&copy; Игорян Corp. Все права надежно зашифрованы случайным ключом случайной длины случайное число раз.</p>
+      </footer>
+    </div> <!-- /container -->
+
+{% endblock %}
