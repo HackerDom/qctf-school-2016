@@ -18,7 +18,7 @@ def handle_connection(conn,addr):
 
         if time.time()-t1>filereadTimer:
 
-            f = open('flag',mode='r')
+            f = open('defQCTF',mode='r')
             lines = f.readlines()
             f.close()
 
@@ -37,29 +37,29 @@ def QCTF(flag):
 
     while 1:
 
-        a = random.randint(0x4,0x23)
-        while ord(flag[a])-0x40 < 33: #a-f
-            a = random.randint(0x4,0x23)
+        z = random.randint(0x4,0x23) # flag[a] - символ из md5 или '_'
+        while ord(flag[z])-0x40 < 33: # ord(flag[a]) - ord('f') < 0
+            z = random.randint(0x4,0x23) # flag[a] == a-f
 
-        if a%2:
-            a+=1
+        if z%2:
+            z+=1
 
         for i in range(0,len(flag)):
-            for j in range(0,random.randint(1,ord(flag[a]))):
+            for j in range(0,random.randint(1,ord(flag[z]))):
 
-                y = bytearray(random.randint(0,0x10))
+                y = bytearray(random.randint(0,0x11))
 
 
-                a = random.randint(0x4,0x23)
-                while ord(flag[a])-0x40 < 33: #a-f
-                    a = random.randint(0x4,0x23)
+                z = random.randint(0x4,0x23) # символ из md5
+                while ord(flag[z])-0x40 < 33: # a-f
+                    z = random.randint(0x4,0x23)
 
-                if ord(flag[a])%2:
-                    s = 0x0d
+                if ord(flag[z])%2: # "случайно" выбираем верхний или нижний регистр
+                    x = 0x0d # 0x0d*5 = ord("A")
                 else:
-                    s = 0x15
+                    x = 0x15 # 0x15*5 = ord("i")
 
-                yield chr(s*5 + len(y))
+                yield chr(x*5 + len(y)) # A-R i-z
 
             if flag[i]!='_':
                 yield flag[i]
