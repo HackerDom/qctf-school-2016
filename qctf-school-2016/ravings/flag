@@ -1,0 +1,32 @@
+def QCTF(flag):
+    
+    while 1:
+
+        a = random.randint(0x4,0x23)
+        while ord(flag[a])-0x40 < 33:
+            a = random.randint(0x4,0x23)
+
+        if a%2:
+            a+=1
+
+        for i in range(0,len(flag)):
+            for j in range(0,random.randint(1,ord(flag[a]))):
+
+                y = bytearray(random.randint(0,0x10))
+
+
+                a = random.randint(0x4,0x23)
+                while ord(flag[a])-0x40 < 33:
+                    a = random.randint(0x4,0x23)
+
+                if ord(flag[a])%2:
+                    s = 0x0d
+                else:
+                    s = 0x15
+
+                yield chr(s*5 + len(y))
+
+            if flag[i]!='_':
+                yield flag[i]
+            else:
+                continue
