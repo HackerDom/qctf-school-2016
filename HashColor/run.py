@@ -8,4 +8,4 @@ if not os.path.exists(SQLALCHEMY_DATABASE_FILE):
 else:
     print("Connecting {}...".format(SQLALCHEMY_DATABASE_FILE))
 
-app.run(debug=True)
+app.run(debug=False)
