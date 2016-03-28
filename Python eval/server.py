@@ -59,23 +59,22 @@ def handle(conn):
     check = check_data(data)
     if check:
         conn.send(('"%s" is Not Allowed!' % check).encode('utf8'))
-        conn.close()
-        return
+    else:
+        p = mp.Process(target=proc, args=(conn, data))
+        during.add(p)
+        p.start()
 
-    p = mp.Process(target=proc, args=(conn, data))
-    during.add(p)
-    p.start()
+        p.join(timeout)
+        if p.is_alive():
+            try:
+                p.terminate()
+                conn.send(b'TimeOut Error!')
+            except:
+                pass
 
-    p.join(timeout)
-    if p.is_alive():
-        try:
-            p.terminate()
-            conn.send(b'TimeOut Error!')
-        except:
-            pass
+        during.remove(p)
 
     conn.close()
-    during.remove(p)
 
 
 def proc(conn, data):
@@ -85,7 +84,6 @@ def proc(conn, data):
         res = str(e).encode('utf8')
 
     conn.send(res)
-    conn.close()
 
 
 if __name__ == '__main__':
@@ -93,9 +91,9 @@ if __name__ == '__main__':
     parser = p.parse_args(sys.argv[1:])
 
     try:
-        fblacklist = parser.blacklist
-        blacklist = open(fblacklist).read().split()
+        blacklist = open(parser.blacklist).read().split()
     except Exception as e:
+        print('Can\'t open "blacklist.txt"')
         print(e)
         sys.exit(1)
 
@@ -136,4 +134,5 @@ if __name__ == '__main__':
             for p in during:
                 p.terminate()
 
+            sock.close()
             sys.exit(1)
