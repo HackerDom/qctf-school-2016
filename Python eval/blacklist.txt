@@ -1,1 +1,1 @@
-eval exec lambda thread process kill
+eval exec lambda hread rocess kill exit
