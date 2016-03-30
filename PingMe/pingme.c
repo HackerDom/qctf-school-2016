@@ -134,7 +134,7 @@ uint32_t internet_checksum(void *addr, size_t count)
 	while( count > 1 )  {
 		/*  This is the inner loop */
 		sum += *(uint16_t *)addr;
-		addr = (uint16_t *)addr + 2;
+		addr = (uint16_t *)addr + 1;
 		count -= 2;
 	}
 
