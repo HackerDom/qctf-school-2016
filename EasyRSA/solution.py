@@ -52,7 +52,7 @@ import time
 n_corrupted = ''.join(map(lambda line: line.replace(':', ''), n_corrupted.split()))
 d_corrupted = ''.join(map(lambda line: line.replace(':', ''), d_corrupted.split()))
 
-for i in range(0xd4, 0x100):
+for i in range(0x100):
     n = int(n_corrupted % i, 16)
     print('{}% complete'.format(i * 100 / 256))
     for j in range(0x100):
