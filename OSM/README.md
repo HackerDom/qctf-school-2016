@@ -7,7 +7,7 @@
 QCTF_ + md5(hikikomori) = QCTF_246e3a8ba5028e32070404b5ef2c1686
 
 Координаты:
-https://www.openstreetmap.org/#map=27/35.6545987/139.6981091
+https://www.openstreetmap.org/#map=25/35.65459859913414/139.69810914992277
 
 ##Описание
 
