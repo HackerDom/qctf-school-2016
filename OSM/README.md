@@ -1,5 +1,12 @@
 #NHK
 
+##Флаг
+
+QCTF_ + md5(hikikomori) = QCTF_246e3a8ba5028e32070404b5ef2c1686
+
+Координаты:
+https://www.openstreetmap.org/#map=27/35.6545987/139.6981091
+
 ##Описание
 
 Участникам выдаётся файл __NHK__.
