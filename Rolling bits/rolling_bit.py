@@ -5,22 +5,24 @@ from socket import socket
 
 
 def main():
-    IP = "127.0.0.1"
-    PORT = 8800
-    ADDR = (IP,PORT)
-    while 1:
-        sock = socket()
-        sock.bind(ADDR)
-        sock.listen(1)
-        conn, address = sock.accept()
-        data = b'\x00'
-        while data:
-            try:
-                data = conn.recv(65545)[:-1]
-                if data:
-                    conn.send(transponate(data)+b'\n')
-            except:
-                pass
+    listen()
+
+def listen():
+    pass
+
+def work(client):    
+    data = b'\x00'
+    while data:
+        try:
+            data = client.recv(65545)[:-1]
+            if data:
+                client.send(transponate(data)+b'\n')
+            else:
+                break
+        except:
+            break
+    client.close()
+
 
 
 
