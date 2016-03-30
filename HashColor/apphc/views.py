@@ -13,11 +13,12 @@ def main():
         count = current_user.count
         kwargs = dict()
         kwargs.setdefault('login', current_user.login)
+        kwargs.setdefault('hash', current_user.userhash)
 
         if current_user.show:
             current_user.show = False
             db.session.commit()
-            text = 'Invite:'
+            text = 'Инвайт:'
             img = None
             if count > 0:
                 img = generate_image(separate_blocks(current_user.userhash)[3 - count])
@@ -25,7 +26,7 @@ def main():
                 count = current_user.count
                 db.session.commit()
             else:
-                text = 'You have no invites!'
+                text = 'А инвайты кончились :('
 
             if img:
                 kwargs.setdefault('img', img)
@@ -35,7 +36,7 @@ def main():
         kwargs.setdefault('count', count)
 
         if current_user.flag:
-            kwargs.setdefault('flag', 'You won!')
+            kwargs.setdefault('flag', 'QCTF_f00fba01f86dbf3a22171e514fc32d7e')
 
         resp = make_response(render_template("main.htm", **kwargs))
 
@@ -72,7 +73,7 @@ def registration():
             invite = None
 
         if models.User.query.filter_by(login=login).first():
-            return render_template("registration.htm", form=form, text="Login already in use!")
+            return render_template("registration.htm", form=form, text="Такой пользователь уже есть")
 
         user = models.User(login, password, invite, 3, userhash, flag)
         db.session.add(user)
@@ -96,7 +97,7 @@ def login():
             login_user(user, remember=True)
             return redirect('/')
         else:
-            return render_template("login.htm", form=form, text="Wrong login/password!")
+            return render_template("login.htm", form=form, text="Ошибочка вышла, логин/пароль не верен!")
     return render_template("login.htm", form=form)
 
 

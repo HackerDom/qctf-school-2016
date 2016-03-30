@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+from random import randint
 
 # SQLAlchemy
 # python-flask
@@ -21,14 +21,15 @@ def separate_blocks(md5_hex):
 
 
 def generate_image(string):
-    img = Image.new('RGBA', (50, 50))
+    size = randint(50, 150)
+    img = Image.new('RGBA', (size, size))
     data = [
         (
             int(string[:2], 16),
             int(string[2:4], 16),
             int(string[4:6], 16),
             int(string[6:8], 16)
-        ) for x in range(50*50)]
+        ) for x in range(size*size)]
     img.putdata(data, 1, 0)
     buff = BytesIO()
     img.save(buff, format="PNG")
