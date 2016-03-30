@@ -1,5 +1,7 @@
 #NHK
 
+>Conspiracy... Conspiracy... Conspiracy...
+
 ##Флаг
 
 QCTF_ + md5(hikikomori) = QCTF_246e3a8ba5028e32070404b5ef2c1686
