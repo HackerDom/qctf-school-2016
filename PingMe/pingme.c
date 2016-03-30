@@ -7,7 +7,6 @@
 #include "icmp.h"
 
 
-#define DEBUG
 #define IPHDR_SIZE 20
 #define SRC_ADDR_OFFSET 12
 #define DST_ADDR_OFFSET 16
@@ -56,8 +55,11 @@ void handle_packet(int sock, unsigned char *buffer, size_t buffer_len,
 	uint8_t response[256];
 	icmp *icmp_packet;
 	size_t icmp_packet_size;
-	uint8_t *src_addr;
 	char *response_message;
+
+#ifdef DEBUG
+	uint8_t *src_addr;
+#endif
 
 	if(buffer_len < IPHDR_SIZE + sizeof(icmp))
 		return;
