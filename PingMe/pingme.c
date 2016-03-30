@@ -70,9 +70,6 @@ void handle_packet(int sock, unsigned char *buffer, size_t buffer_len,
 	if(icmp_packet_size > 128)
 		return;
 
-	icmp_packet = (icmp *)(buffer + IPHDR_SIZE);
-	icmp_packet_size = buffer_len - IPHDR_SIZE;
-
 #ifdef DEBUG
 	src_addr = (uint8_t *)(buffer + SRC_ADDR_OFFSET);
 	printf("From: %u.%u.%u.%u\n",
