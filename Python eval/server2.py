@@ -74,7 +74,6 @@ def handle(conn):
 
         during.remove(p)
 
-
     conn.close()
 
 
@@ -94,7 +93,7 @@ if __name__ == '__main__':
     try:
         blacklist = open(parser.blacklist).read().split()
     except Exception as e:
-        print('Can\'t open "blacklist.txt"')
+        print('Can\'t open "%s"' % parser.blacklist)
         print(e)
         sys.exit(1)
 

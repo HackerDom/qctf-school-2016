@@ -64,6 +64,4 @@ timeout - Время жизни одного процесса, по умолча
 
 [Источник](https://www.reddit.com/r/Python/comments/hftnp/ask_rpython_recovering_cleared_globals#thing_t1_c1v372r)  
 
----
-
 [Еще полезная ссылочка](http://www.floyd.ch/?p=584)
