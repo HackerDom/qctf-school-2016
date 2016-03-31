@@ -2,13 +2,12 @@
 
 import multiprocessing as mp
 import socket
-import sys
 
 
 def proc(conn):
     data = conn.recv(1024).decode('utf8')
     try:
-        res = str(eval(data, {'__builtins__':{}})).encode('utf8')
+        res = str(eval(data, {'__builtins__': {}})).encode('utf8')
     except Exception as e:
         res = str(e).encode('utf8')
 
