@@ -79,7 +79,7 @@ def handle(conn):
 
 def proc(conn, data):
     try:
-        res = str(eval(data, {'__builtins__':{}})).encode('utf8')
+        res = str(eval(data, {'__builtins__': {}})).encode('utf8')
     except Exception as e:
         res = str(e).encode('utf8')
 
