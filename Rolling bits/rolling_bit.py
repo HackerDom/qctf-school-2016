@@ -24,8 +24,6 @@ def work(client):
     client.close()
 
 
-
-
 def transponate(data):
     transponData = []
     for i in range(0,len(data),8):
