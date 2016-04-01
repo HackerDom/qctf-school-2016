@@ -12,8 +12,10 @@ def listen():
 
 def work(client):    
     data = b'\x00'
+    client.send(b'Lynx Cipher service.\nTry to crack it:' +\
+                ciph_flag()+b'\nEnter your data:\n')
     while data:
-        try:
+        try:в
             data = client.recv(65545)[:-1]
             if data:
                 client.send(transponate(data)+b'\n')
@@ -23,6 +25,9 @@ def work(client):
             break
     client.close()
 
+def ciph_flag():
+    flag = b'QCTF_d8e3c6b9ccb2b787dc3aa878dee3a1ff'
+    return transponate(flag)
 
 def transponate(data):
     transponData = []
