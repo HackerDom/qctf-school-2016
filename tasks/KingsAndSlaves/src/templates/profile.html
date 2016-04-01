@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+      <div class="container">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        <hr/>
+        <div class="list-group">
+          <a href="#" class="list-group-item disabled">Имя: {{ user.username }}</a>
+          {% if not user.is_god %}
+          <a href="#" class="list-group-item list-group-item-warning">Золото: {{ user.money }}</a>
+          {% endif %}
+          {% if current_user.username != user.username and user.is_king and not current_user.is_king and not user.is_god %}
+              <a href="{{ url_for('tax', king=user.username) }}" class="list-group-item">Платить налог</a>
+          {% endif %}
+          {% if current_user.username == user.username and not current_user.is_king and not current_user.is_god %}
+              <a href="{{ url_for('king') }}" class="list-group-item">Стать королем</a>
+              <a href="{{ url_for('profile', person='КОРОЛЬ') }}" class="list-group-item">КОРОЛЬ</a>
+          {% endif %}
+          {% if current_user.username == user.username and not current_user.is_god %}
+          <a href="{{ url_for('secret') }}" class="list-group-item">Купить секрет</a>
+          {% endif %}
+          {% if current_user.username == user.username %}
+          <a href="{{ url_for('edit', person=current_user.username) }}" class="list-group-item">Редактировать</a>
+          {% endif %}
+          {% if current_user.is_god and user.is_king and not user.is_god %}
+            <a href="{{ url_for('downgrade', king=user.username) }}" class="list-group-item">Сделать холопом</a>
+          {% elif current_user.is_god and not user.is_king %}
+            <a href="{{ url_for('upgrade', king=user.username) }}" class="list-group-item">Назначить королем</a>
+          {% endif %}
+          {% if current_user.username == user.username %}
+          <a href="{{ url_for('killing') }}" class="list-group-item list-group-item-danger">Убить себя</a>
+          {% endif %}
+        </div>
+      </div>
+</div>
+
+
+    <div class="container">
+      <footer>
+        <p>&copy; Игорян Corp. Все права надежно зашифрованы случайным ключом случайной длины случайное число раз.</p>
+      </footer>
+    </div> <!-- /container -->
+
+{% endblock %}

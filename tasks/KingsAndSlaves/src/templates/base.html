@@ -1,0 +1,45 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Короли и Холопы{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('index') }}">Короли и Холопы</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          {% if current_user.is_authenticated %}
+          {% if current_user.is_god %}
+            <a class="btn btn-warning navbar-btn navbar-right" href="{{ url_for('logout') }}">Остановить время</a>
+            <p class="navbar-text navbar-right">О! Великий {{ current_user.username }}&nbsp&nbsp&nbsp</p>
+          {% elif current_user.is_king %}
+            <a class="btn btn-warning navbar-btn navbar-right" href="{{ url_for('logout') }}">Отдохнуть</a>
+            <p class="navbar-text navbar-right">Превосходительство {{ current_user.username }}&nbsp&nbsp&nbsp</p>
+          {% else %}
+            <a class="btn btn-warning navbar-btn navbar-right" href="{{ url_for('logout') }}">Вырубиться</a>
+            <p class="navbar-text navbar-right">Славный холопчик {{ current_user.username }}&nbsp&nbsp&nbsp</p>
+          {% endif %}
+          {% else %}
+          <form class="navbar-form navbar-right" method="POST" action="{{ url_for('index') }}">
+            {{ login_form.hidden_tag() }}
+            <div class="form-group">
+              {{ login_form.username(placeholder="Имя", class="form-control") }}
+            </div>
+            <div class="form-group">
+              {{ login_form.password(placeholder="Пароль", class="form-control") }}
+            </div>
+            {{ login_form.submit(class="btn btn-success") }}
+          </form>
+          {% endif %}
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+{% endblock %}
+
