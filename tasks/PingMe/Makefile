@@ -1,5 +1,5 @@
 release:
-	gcc -o pingme pingme.c -m32 -Wall -pedantic
+	gcc -o pingme pingme.c -Wall -pedantic
 
 debug:
-	gcc -o pingme pingme.c -m32 -Wall -pedantic -DDEBUG
+	gcc -o pingme pingme.c -Wall -pedantic -DDEBUG

@@ -1,0 +1,2 @@
+# Or any other database engine supported by PHP
+apt-get install php5 php5-fpm php5-mysql mysql-server

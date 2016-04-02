@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from apphc import app, db
 from apphc.config import SQLALCHEMY_DATABASE_FILE
 import os.path

@@ -59,7 +59,7 @@ if (isset($_REQUEST['serial'])){
                         }
                        ?>
                         
-                        <form method="POST" action="index.php">
+                        <form method="POST" action="/">
                             <div class="form-group">
                                 <label>Серийный номер:</label>
                                 <input type="text" class="form-control" name="serial" placeholder="0000-0000-0000-0000" maxlength="19">
