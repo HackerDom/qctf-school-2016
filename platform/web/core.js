@@ -27,7 +27,6 @@ $(document).ready(function() {
         var camera = new BABYLON.TouchCamera('TouchCamera', new BABYLON.Vector3(player.position.x - 20, 20, player.position.z), scene); // вообще камера для сенсорных устройств. костыль.
         camera.rotation = new BABYLON.Vector3(Math.PI/4, Math.PI/2, Math.PI/4);
         camera.target = player;
-        // var camera = new BABYLON.FreeCamera('FreeCamera', new BABYLON.Vector3(0, 1, -15), scene);
         return camera;
     }
 
