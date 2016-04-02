@@ -17,12 +17,16 @@ def create_maze(sym_maze):
     teleport_index = 0
     key_index = 0
     stone_index = 0
+    dragon_index = 0
     for line in sym_maze:
         maze_line = []
         for symb in line:
             if symb == '#':
                 maze_line.append({"id" : tree_index, "type" : "tree"})
                 tree_index += 1
+            if symb == 's':
+                maze_line.append({"id" : stone_index, "type" : "stone"})
+                stone_index += 1
             elif symb == '.':
                 if random.randint(0,100) % 30 == 0:
                     maze_line.append({"id" : stone_index, "type" : "stone"})
@@ -54,4 +58,4 @@ def create_maze(sym_maze):
 if __name__ == "__main__":
     sym_maze = read_file("sym_maze.txt")
     maze = create_maze(sym_maze)
-    write_file("maze.txt", json.dumps({'sunnyMaze' : maze, "catacombMaze" : maze, "playerPosition" : {"x" : 10, "z" : 10}}))
+    write_file("maze.txt", json.dumps({'sunnyMaze' : maze, "catacombMaze" : maze, "playerPosition" : {"x" : 30, "z" : 30}}))

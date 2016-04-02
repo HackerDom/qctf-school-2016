@@ -1,3 +1,5 @@
+var is_scoreboard_open = false;
+
 function hidePopup() {
     $('.popup').html('');
     $('.popup__background').hide();
@@ -6,7 +8,12 @@ function hidePopup() {
 function showPopup($popup) {
     $('.popup').html('');
     $('.popup__background').show();
-    $popup.clone(true).show().appendTo('.popup');
+    var $clone = $popup.clone(true);
+    $clone.show().appendTo('.popup');
+    if ($popup.hasClass('popup__wide'))
+        $('.popup').addClass('popup__wide');
+    else
+        $('.popup').removeClass('popup__wide');
 }
 
 function talk(task_id) {
@@ -57,6 +64,22 @@ function talk(task_id) {
             // TODO
         }
     });
+}
+
+function showScoreboard() {
+    if (is_scoreboard_open) {
+        hidePopup();
+        is_scoreboard_open = false;
+    } else {
+        is_scoreboard_open = true;
+        $.get('scoreboard.php', function (data) {
+            $('#popup__scoreboard').html(data);
+            showPopup($('#popup__scoreboard'));
+            $('.menu a:first-child').text('Закрыть').click(function () {
+                $(this).text('Текущие результаты');
+            });
+        });
+    }
 }
 
 

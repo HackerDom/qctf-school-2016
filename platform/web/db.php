@@ -75,3 +75,15 @@ function is_already_done($user_id, $task_id)
 
     return fetch_one($stmt->get_result()) !== false;
 }
+
+function get_scoreboard()
+{
+    global $db;
+    $query = 'SELECT user_id, users.name, users.location, COUNT(DISTINCT task_id) as tasks_count, MAX(timestamp) as last_success ' .
+             'FROM `submissions` LEFT JOIN users ON submissions.user_id = users.id ' . 
+             'WHERE is_correct = 1 AND users.is_visible = 1 ' .
+             'GROUP BY user_id ' .
+             'ORDER BY tasks_count DESC, last_success ASC';
+    $query = $db->query($query);
+    return fetch_all($query);
+}

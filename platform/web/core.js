@@ -61,9 +61,9 @@ function createGround(scene, groundTextureFile, groundId, maze){
 
 function createObjectsOnMaze(scene, maze, compositId, objects){
     // (name, filename, maximum num of instances, cell size, scene)
-    var spriteManagerTrees = new BABYLON.SpriteManager('treesManager', './textures/trees.png', 1000, 64, scene);
+    var spriteManagerTrees = new BABYLON.SpriteManager('treesManager', './textures/trees.png', 5000, 64, scene);
     
-    var spriteManagerStones = new BABYLON.SpriteManager('stonesManager', './textures/stone.png', 1000, 64, scene);
+    var spriteManagerStones = new BABYLON.SpriteManager('stonesManager', './textures/stone.png', 5000, 64, scene);
 
     var spriteManagerKeys = new BABYLON.SpriteManager('keysManager', './textures/key.png', 550, 64, scene);
 
@@ -73,7 +73,7 @@ function createObjectsOnMaze(scene, maze, compositId, objects){
 
     var spriteManagerDragons = new BABYLON.SpriteManager("dragonsManager", "./textures/dragons.png", 550, 64, scene);
     var spriteManagerDragons1 = new BABYLON.SpriteManager("dragonsManager1", "./textures/dragon1.png", 550, 64, scene);
-    var spriteManagerDragons2 = new BABYLON.SpriteManager("dragonsManager2", "./textures/dragons2.png", 550, 64, scene);
+    var spriteManagerDragons2 = new BABYLON.SpriteManager("dragonsManager2", "./textures/dragons2.png", 550, 110, scene);
 
     var typesFunctions = [];
     objects['keys'] = [];

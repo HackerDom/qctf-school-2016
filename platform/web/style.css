@@ -28,6 +28,8 @@ html, body {
 .popup {
     margin: 100px auto;
     width: 400px;
+    max-height: 550px;
+    overflow-y: scroll;
 
     background-color: white;
     opacity: 1;
@@ -36,6 +38,10 @@ html, body {
     border: 6px solid rgba(60, 130, 60, 0.5);
 
     color: rgba(10, 40, 10, 1);
+}
+
+.popup.popup__wide {
+    width: 600px;
 }
 
 .popup__template {
@@ -112,4 +118,50 @@ a.file {
 
 a.file:hover {
     background-color: rgba(67, 50, 119, 0.8);
+}
+
+.menu {
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: #292B28;
+    z-index: 10;
+    padding: 10px 24px;
+    border-bottom-left-radius: 20px;
+    padding-top: 5px;
+    padding-left: 30px;
+}
+
+.menu a {
+    color: #FDFFBA;
+    text-decoration: none;
+    border-bottom: 1px dashed #Fdffba;
+    font-size: 10pt;    
+}
+
+.scoreboard {
+    margin-top: 20px;
+}
+
+.scoreboard .team {
+    width: 360px;
+    max-width: 360px;
+}
+
+.scoreboard th {
+    text-align: left;
+}
+
+.scoreboard td, .scoreboard th {
+    padding-right: 10px;
+}
+
+.scoreboard .team .location {
+    color: #768676;
+    font-size: 80%;
+}
+
+.scoreboard td {
+    vertical-align: top;
+    padding-top: 4px;
 }
