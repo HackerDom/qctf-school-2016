@@ -35,5 +35,5 @@
     $is_correct = $task['flag'] == $flag;
     create_submission($_SESSION['user_id'], $task_id, $flag, $is_correct);
 
-    return json_encode(['status' => 'ok', 'is_correct' => $is_correct]);    
+    echo json_encode(['status' => 'ok', 'is_correct' => $is_correct]);    
 ?>

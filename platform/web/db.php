@@ -50,7 +50,7 @@ function get_task($task_id)
 
     $stmt = $db->prepare('SELECT * FROM tasks WHERE id = ?');
     $stmt->bind_param('d', $task_id);
-    $query = $stmt->execute();
+    $stmt->execute();
     $task = fetch_one($stmt->get_result());
     return $task;
 }
@@ -59,8 +59,19 @@ function create_submission($user_id, $task_id, $answer, $is_correct)
 {
     global $db;
 
-    $stmt = $db->prepare('INSERT INTO submission (user_id, task_id, answer, is_correct) VALUES (?, ?, ?, ?)');
-    $stmt->bind_param('ddsd', $user_id, $task_id, $answer, $is_correct ? 1 : 0);
+    $is_correct = $is_correct ? 1 : 0;
+    $stmt = $db->prepare('INSERT INTO submissions (user_id, task_id, answer, is_correct) VALUES (?, ?, ?, ?)');
+    $stmt->bind_param('ddsd', $user_id, $task_id, $answer, $is_correct);
+    $stmt->execute();
+}
+
+function is_already_done($user_id, $task_id)
+{
+    global $db;
+
+    $stmt = $db->prepare('SELECT * FROM submissions WHERE user_id = ? AND task_id = ? AND is_correct = 1 LIMIT 1');
+    $stmt->bind_param('dd', $user_id, $task_id);
     $query = $stmt->execute();
-    $query->get_result();
+
+    return fetch_one($stmt->get_result()) !== false;
 }
