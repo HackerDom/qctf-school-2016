@@ -146,7 +146,7 @@ function createObjectsOnMaze(scene, maze, compositId, objects){
         teleport.position.z = j * cellSize;
         teleport.position.y = 1;
         teleport.size = cellSize;
-        teleport.playAnimation(0, 15, true, 100);
+        teleport.playAnimation(8, 14, true, 200);
         objects['teleports'][compositId + 'Teleport' + id] = teleport;
     };
 
