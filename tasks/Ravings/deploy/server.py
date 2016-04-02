@@ -80,7 +80,7 @@ def connection_ready(sock, fd, events):
         handle_connection(connection, address)
 
 if __name__ == '__main__':
-    port = 5000
+    port = 6000
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.setblocking(0)
