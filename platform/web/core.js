@@ -268,7 +268,7 @@ function map_loaded(maze)
 {
     sunnyMaze = maze.sunnyMaze;
     catacombMaze = maze.catacombMaze;
-    playerPosition = maze.playerPosition
+    playerPosition = maze.playerPosition;
 
     sunnySceneObjects.maze = sunnyMaze;
     catacombSceneObjects.maze = catacombMaze;
@@ -366,8 +366,22 @@ function map_loaded(maze)
     engine.runRenderLoop(function(){
         if (activeScene == 0)
             scene.render();
-        else
+        else {
+            var player = catacombSceneObjects.player;
+            for (var obj_type in catacombSceneObjects.objects) {
+                console.log(obj_type);
+                for (var obj_key in catacombSceneObjects.objects[obj_type]) {
+                    var obj = catacombSceneObjects.objects[obj_type][obj_key];
+                    var delta_x = obj.position.x - player.position.x;
+                    var delta_z = obj.position.z - player.position.z;
+                    if (delta_x * delta_x + delta_z * delta_z > 50)
+                        obj.width = 0;
+                    else
+                        obj.width = 2;
+                }
+             }
             scene2.render();
+        }
     });
 
     window.addEventListener('resize', function(){
