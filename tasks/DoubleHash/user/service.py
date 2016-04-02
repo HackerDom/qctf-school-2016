@@ -26,9 +26,9 @@ def login():
         if username == 'admin':
             session['flag'] = flag
         else:
-            session['flag'] = "sorry, flag is forbidden"
+            session['flag'] = "Sorry, you can't view the flag"
     else:
-        session['flag'] = "uncorrect login-password"
+        session['flag'] = "Incorrect login or password"
     return render_template("index.html")
 
 @app.route('/reg', methods=['GET'])
@@ -42,7 +42,7 @@ def reg_post():
     hash_password = md5((password + salt).encode()).hexdigest()
     user = User(login=username, password=hash_password)
     if User.query.filter_by(login=username).first() is not None:
-        session['error_message'] = "user already exists"
+        session['error_message'] = "User with same login already exists"
         return render_template("reg.html")
     db.session.add(user)
     db.session.commit()
