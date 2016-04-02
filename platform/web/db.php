@@ -4,7 +4,7 @@ function connect_to_database()
 {
     $host = 'localhost';
     $user = 'platform';
-    $password = 'zxfPkqe4NXsUlXWKfoNC'
+    $password = 'zxfPkqe4NXsUlXWKfoNC';
     $database = 'platform';
     $db = new mysqli($host, $user, $password, $database);
     if ($db->connect_error) 
@@ -29,32 +29,17 @@ function fetch_all($query, $field=false)
     return $result;
 }
 
+function fetch_one($query)
+{
+    if ($query->num_rows == 0)
+        return false;
+    return $query->fetch_assoc();
+}
+
 function get_users()
 {
     global $db;
 
     $query = $db->query('SELECT * FROM users');
     return fetch_all($query, 'id');
-}
-
-function get_task_keys($task_id)
-{
-    global $db;
-
-    $query = $db->query('SELECT * FROM tasks_keys WHERE task_id = "'.$db->real_escape_string($task_id).'"');
-    return fetch_all($query);
-}
-
-function get_user_keys($user_id)
-{
-    global db;
-
-    $query = $db->query('SELECT key_id FROM users_keys WHERE user_id = "'.$db->real_escape_string($user_id).'"');
-    return array_column(fetch_all($query), 'key_id');
-}
-
-function is_task_open_for_user($user_id, $task_id)
-{
-    $user_keys = get_user_keys($user_id);
-    $task_keys = 
 }
