@@ -85,7 +85,7 @@ if __name__ == '__main__':
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.setblocking(0)
     sock.bind(("", port))
-    sock.listen(128)
+    sock.listen(642) # 80*4 * 2     + 2
 
     io_loop = tornado.ioloop.IOLoop.current()
     callback = functools.partial(connection_ready, sock)
