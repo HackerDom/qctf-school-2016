@@ -1,3 +1,4 @@
+
 var cellSize = 2;
 
 var canvas = document.getElementById('renderCanvas');
@@ -67,7 +68,7 @@ function createObjectsOnMaze(scene, maze, compositId, objects){
     var spriteManagerKeys = new BABYLON.SpriteManager('keysManager', './textures/key.png', 550, 64, scene);
 
     var spriteManagerTeleports = new BABYLON.SpriteManager('teleportsManager', './textures/teleport.png', 550, 64, scene);
-    var spriteManagerGirls = new BABYLON.SpriteManager("girlsManager", "./textures/girls.png", 550, 64, scene);
+    var spriteManagerGirls = new BABYLON.SpriteManager("girlsManager", "./textures/girls.png", 550, 48, scene);
     var spriteManagerFences = new BABYLON.SpriteManager("fencesManager", "./textures/fences.png", 550, 64, scene);
     var spriteManagerDragons = new BABYLON.SpriteManager("dragonsManager", "./textures/dragons.png", 550, 64, scene);
 
@@ -128,9 +129,12 @@ function createObjectsOnMaze(scene, maze, compositId, objects){
         dragon.position.y = 1;
         dragon.size = cellSize;
 
-        idx = Math.floor(Math.random() * (15 + 1));
-        dragon.cellIndex = idx;
-        
+        idx = Math.floor(Math.random() * (2 + 1));
+        console.log(idx);
+        // dragon.cellIndex = idx;
+
+        dragon.playAnimation(idx * 4, idx * 4 + 3, true, 400);
+
         objects["dragons"][compositId + "Dragon" + id] = dragon;
     };
 
@@ -149,7 +153,6 @@ function createObjectsOnMaze(scene, maze, compositId, objects){
     for (var i = 0; i < maze.length; i++)
         for (var j = 0; j < maze[i].length; j++)
         {
-            console.log(maze[i][j]['type']);
             var f = typesFunctions[maze[i][j]['type']];
             f(i, j, maze[i][j]['id']);
         }
