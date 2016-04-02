@@ -150,6 +150,7 @@ function createObjectsOnMaze(scene, maze, compositId, objects){
     for (var i = 0; i < maze.length; i++)
         for (var j = 0; j < maze[i].length; j++)
         {
+            console.log(maze[i][j]['type']);
             var f = typesFunctions[maze[i][j]['type']];
             f(i, j, maze[i][j]['id']);
         }
@@ -409,7 +410,6 @@ function map_loaded(maze)
         else {
             var player = catacombSceneObjects.player;
             for (var obj_type in catacombSceneObjects.objects) {
-                console.log(obj_type);
                 for (var obj_key in catacombSceneObjects.objects[obj_type]) {
                     var obj = catacombSceneObjects.objects[obj_type][obj_key];
                     var delta_x = obj.position.x - player.position.x;
