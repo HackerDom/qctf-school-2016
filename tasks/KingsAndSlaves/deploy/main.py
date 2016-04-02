@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import hashlib
 from flask import Flask, render_template, redirect, url_for, request, flash, abort
 from flask.ext.sqlalchemy import SQLAlchemy

@@ -25,9 +25,15 @@ QCTF_5e987c1dc08beb4dca5a6f9c9e912321
 4. **pingme.c** - исходный код сервиса
 
 
+Решение
+-------
+```
+sudo nping ping.contest.qctf.ru --icmp --icmp-seq 31337 --data-string dAEcdW4eWzeuscyd -vvv
+```
+
 Примечание
 ----------
 Для игнорирования `icmp` пакетов ОС, необходимо включить соответствующую настройку ядра:
 ```
-sudo sysctl net.ipv4.icmp_echo_ignore_all = 1
+sudo sysctl net.ipv4.icmp_echo_ignore_all=1
 ```

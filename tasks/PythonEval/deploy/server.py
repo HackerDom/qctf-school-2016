@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import argparse
 import multiprocessing as mp
@@ -6,6 +6,10 @@ import queue
 import socket
 import sys
 import threading
+import logging
+
+
+logging.basicConfig(filename='/var/log/python.log', level=logging.DEBUG, format='[%(levelname)s] %(asctime)s:%(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 
 def create_parser():
@@ -98,8 +102,8 @@ if __name__ == '__main__':
     try:
         blacklist = open(parser.blacklist).read().split()
     except Exception as e:
-        print('Can\'t open "%s"' % parser.blacklist)
-        print(e)
+        logging.error('Can\'t open "%s"' % parser.blacklist)
+        logging.exception(e)
         sys.exit(1)
 
     timeout = parser.timeout
@@ -111,13 +115,15 @@ if __name__ == '__main__':
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     except socket.error as e:
-        print('Error, creating socket %s' % e)
+        logging.error('Error, creating socket %s' % e)
         sys.exit(1)
+
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
     sock.bind((hostname, port))
     sock.listen(100)
 
-    print('Server[%s : %s] listening on port: %d' % (hostname, hostaddr, port))
+    logging.info('Server[%s : %s] listening on port: %d' % (hostname, hostaddr, port))
 
     connected = queue.Queue()
     during = set()
@@ -127,10 +133,15 @@ if __name__ == '__main__':
     while True:
         try:
             conn, addr = sock.accept()
+<<<<<<< HEAD
             print('Client connected [%s]' % ':'.join(map(str, addr)))
             connected.put((conn, addr))
+=======
+            logging.info("Client connected [%s]" % ':'.join(map(str, addr)))
+            connected.put(conn)
+>>>>>>> e9269e74018d3c819cf08aa4db9a67ec97624e9c
         except KeyboardInterrupt:
-            print('Server Stopped')
+            logging.info('Server Stopped')
             try:
                 conn.close()
             except:
