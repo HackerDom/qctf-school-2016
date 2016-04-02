@@ -18,7 +18,7 @@ def create_parser():
         epilog='Matveev Anton. QCTF School 2016.')
 
     parser.add_argument('-host', '--host',
-                        default=socket.gethostname(),
+                        default=socket.gethostbyname(socket.gethostname()),
                         type=str,
                         help='Host address')
 
