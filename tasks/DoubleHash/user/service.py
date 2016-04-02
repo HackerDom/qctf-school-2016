@@ -1,3 +1,5 @@
+# Доступ для тестеров к базе данных (MySQL) открыт из интернета, пользователь anonymous без пароля
+
 from flask import render_template, session, request, url_for, redirect
 from app import app, db
 from app.models import User
@@ -18,7 +20,7 @@ def login():
     username = request.form['login']
     password = request.form['password']
     hash_password = md5((password + salt).encode()).hexdigest()
-    user = User.query.filter_by(login=username, password=hash_password).first() # не забыть закрыть анонимный доступ в дб
+    user = User.query.filter_by(login=username, password=hash_password).first()
     if user is not None:
         # у администратора должен быть сложный пароль! ни в коем случае не ставьте легкоподбираемые пароли, которые есть в словарях в интернете.
         if username == 'admin':
