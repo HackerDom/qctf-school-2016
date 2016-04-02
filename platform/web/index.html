@@ -10,7 +10,47 @@
 </head>
 <body>
     <canvas id="renderCanvas"></canvas>
+    <div class="popup__background">
+        <div class="popup"></div>
+    </div>
+
+    <div class="popup__template" id="popup__welcome">
+        <h3>Приветствуем тебя, путник</h3>
+
+        <p>
+            Знаешь ли ты, что находишься в очень странном месте. Этот лес называют худшим местом на земле. Местом, откуда не возвращаются.
+        </p>
+
+        <p>
+            Всё это, конечно, сказки. Ты не веришь в сказки? Давай расскажем тебе правду. Этот лес &mdash; территория великих и древних драконов.
+            И безумны были те люди, что решили выселить их со своей территорий. Теперь все эти люди — заложники драконов.
+            Твоя задача — спасти их всех от неминуемой смерти.
+        </p>
+
+        <p>
+            <b>Помни</b>. Драконы — добрейшие животные. Правда, до тех пор, пока ты делаешь то, что они говорят.
+        </p>
+        
+        <div class="button_wrapper">
+            <button>Поехали</button>
+        </div>
+    </div>
+
+    <div class="popup__template" id="popup__login">
+        <h3>Представься, путник</h3>
+        <input type="hidden" name="login" placeholder="Логин" value="">
+        <input type="password" name="password" placeholder="Пароль" value="">
+
+        <div class="button_wrapper">
+            <button>Я готов</button>
+        </div>
+    </div>
+
+    <div class="popup__template" id="popup__loading">
+        Загружаем карту...
+    </div>
 
     <script src="core.js"></script>
+    <script src="popups.js"></script>
 </body>
 </html>
