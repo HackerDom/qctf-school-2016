@@ -1,15 +1,32 @@
+function hidePopup() {
+    $('.popup').html('');
+    $('.popup__background').hide();
+}
+
+function showPopup($popup) {
+    $('.popup').html('');
+    $('.popup__background').show();
+    $popup.clone(true).show().appendTo('.popup');
+}
+
+function talk(task_id) {
+    showPopup($('#popup__task'));
+    $.getJSON('get_task.php?task_id=' + task_id, function(data) {
+        if (data.status == 'ok') {
+            var task = data.task;
+            var $inner = $('.popup > div');
+            $inner.html(task.html);
+            $inner.prepend('<h2>' + task.title + '</h2>');
+            $inner.append('<input type="text" name="flag" placeholder="Ваш ответ">');
+            $inner.append('<div class="button_wrapper"><button>Отправить</button></div>');
+        } else {
+            // TODO
+        }
+    });
+}
+
+
 $(document).ready(function(){
-    function hidePopup() {
-        $('.popup').html('');
-        $('.popup__background').hide();
-    }
-
-    function showPopup($popup) {
-        $('.popup').html('');
-        $('.popup__background').show();
-        $popup.clone(true).show().appendTo('.popup');
-    }
-
     $('#popup__welcome button').click(function() {
         showPopup($('#popup__login'));
     });

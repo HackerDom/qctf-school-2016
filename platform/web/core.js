@@ -149,6 +149,7 @@ function createObjectsOnMaze(scene, maze, compositId, objects){
     for (var i = 0; i < maze.length; i++)
         for (var j = 0; j < maze[i].length; j++)
         {
+            console.log(maze[i][j]['type']);
             var f = typesFunctions[maze[i][j]['type']];
             f(i, j, maze[i][j]['id']);
         }

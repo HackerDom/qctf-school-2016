@@ -43,8 +43,9 @@ def create_maze(sym_maze):
                 maze_line.append({"id" : girl_index, "type" : "girl"})
                 girl_index += 1
             elif symb == 'd':
-                maze_line.append({"id" : dragon_index, "type" : "dragon"})
+                # task indexes are from 1
                 dragon_index += 1
+                maze_line.append({"id" : dragon_index, "type" : "dragon"})
                 
         maze.append(maze_line)
     return maze
