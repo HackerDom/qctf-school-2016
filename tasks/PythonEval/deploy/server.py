@@ -50,31 +50,36 @@ def check_data(data):
 def control():
     while True:
         if len(during) < nCPU:
-            conn = connected.get()
-            threading.Thread(target=handle, args=(conn, )).start()
+            conn, addr = connected.get()
+            threading.Thread(target=handle, args=(conn, addr)).start()
 
 
-def handle(conn):
-    data = conn.recv(1024).decode('utf8')
-    check = check_data(data)
-    if check:
-        conn.send(('"%s" is Not Allowed!' % check).encode('utf8'))
-    else:
-        p = mp.Process(target=proc, args=(conn, data))
-        during.add(p)
-        p.start()
+def handle(conn, addr):
+    conn.settimeout(3)
+    try:
+        data = conn.recv(1024).decode('utf8')
+        check = check_data(data)
+        if check:
+            conn.send(('"%s" is Not Allowed!' % check).encode('utf8'))
+        else:
+            p = mp.Process(target=proc, args=(conn, data))
+            during.add(p)
+            p.start()
 
-        p.join(timeout)
-        if p.is_alive():
-            try:
-                p.terminate()
-                conn.send(b'TimeOut Error!')
-            except:
-                pass
+            p.join(timeout)
+            if p.is_alive():
+                try:
+                    p.terminate()
+                    conn.send(b'TimeOut Error!')
+                except:
+                    print('Client [%s]: TimeOut: too long command execution' % ':'.join(map(str, addr)))
 
-        during.remove(p)
-
-    conn.close()
+            print('Client [%s]: OK' % ':'.join(map(str, addr)))
+            during.remove(p)
+    except:
+        print('Client [%s]: TimeOut: no data receive' % ':'.join(map(str, addr)))
+    finally:
+        conn.close()
 
 
 def proc(conn, data):
@@ -122,8 +127,8 @@ if __name__ == '__main__':
     while True:
         try:
             conn, addr = sock.accept()
-            print("Client connected [%s]" % ':'.join(map(str, addr)))
-            connected.put(conn)
+            print('Client connected [%s]' % ':'.join(map(str, addr)))
+            connected.put((conn, addr))
         except KeyboardInterrupt:
             print('Server Stopped')
             try:
