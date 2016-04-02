@@ -39,6 +39,12 @@ def create_maze(sym_maze):
             elif symb == 'o':
                 maze_line.append({"id" : key_index, "type" : "key"})
                 key_index += 1
+            elif symb == 'g':
+                maze_line.append({"id" : girl_index, "type" : "girl"})
+                girl_index += 1
+            elif symb == 'd':
+                maze_line.append({"id" : dragon_index, "type" : "dragon"})
+                dragon_index += 1
                 
         maze.append(maze_line)
     return maze
