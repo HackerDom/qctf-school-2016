@@ -19,7 +19,7 @@ Python eval
 ```
 python3 server.py [-h] [-host HOST] [-p PORT] [-cpu CPU] [-t TIMEOUT]
 ```
-host - Имя хоста, по умолчанию - socket.gethostname()  
+host - Адрес хоста, по умолчанию - socket.gethostbyname(socket.gethostname()) 
 port - Порт, по умолчанию 1337  
 cpu - Количество одновременно запущенных процессов, по умолчанию 16  
 timeout - Время жизни одного процесса, по умолчанию 3 секунды  
