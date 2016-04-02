@@ -25,5 +25,9 @@
     }
 
     # TODO: read task from file by its name
-    echo json_encode(['status' => 'ok', 'task' => ['title' => 'Hello world', 'html' => '<p>Это пробное задание</p>']]);
+    $already_done = is_already_done($_SESSION['user_id'], $task_id);
+    echo json_encode(['status' => 'ok', 'task' => ['title' => 'Hello world',
+                                                   'html' => '<p>Это пробное задание</p>',
+                                                   'files' => ['file name' => '/static/file.txt'],
+                                                   'already_done' => $already_done]]);
 ?>

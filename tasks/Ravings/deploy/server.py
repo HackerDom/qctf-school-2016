@@ -80,12 +80,12 @@ def connection_ready(sock, fd, events):
         handle_connection(connection, address)
 
 if __name__ == '__main__':
-    port = 5000
+    port = 6000
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.setblocking(0)
     sock.bind(("", port))
-    sock.listen(128)
+    sock.listen(642) # 80*4 * 2     + 2
 
     io_loop = tornado.ioloop.IOLoop.current()
     callback = functools.partial(connection_ready, sock)

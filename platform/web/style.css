@@ -82,3 +82,34 @@ html, body {
     font-size: 15pt;
     margin-bottom: 25px;
 }
+
+.status {
+    font-size: 14pt;
+    text-align: center;
+    padding-top: 15px;
+    border-radius: 3px;
+}
+
+.status.green {
+    background-color: rgb(217, 255, 214);
+    padding-bottom: 17px;
+    border: 1px solid #ABD8AB;
+}
+
+.files:not(:empty) {
+    margin-bottom: 20px;
+}
+
+a.file {
+    background-color: #433277;
+    padding: 10px 15px;
+    display: inline-block;
+    cursor:  pointer;
+    text-decoration: none;
+    color: #eee;
+    border-radius: 4px;
+}
+
+a.file:hover {
+    background-color: rgba(67, 50, 119, 0.8);
+}

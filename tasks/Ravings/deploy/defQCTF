@@ -14,7 +14,6 @@ def QCTF(flag):
 
                 y = bytearray(random.randint(0,0x11))
 
-
                 z = random.randint(0x4,0x23)
                 while ord(flag[z])-0x40 < 33:
                     z = random.randint(0x4,0x23)
