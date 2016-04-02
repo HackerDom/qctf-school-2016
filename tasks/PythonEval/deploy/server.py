@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
 import argparse
+import logging
 import multiprocessing as mp
 import queue
 import socket
 import sys
 import threading
-import logging
 
 
 logging.basicConfig(filename='/var/log/python.log', level=logging.DEBUG, format='[%(levelname)s] %(asctime)s:%(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
@@ -62,6 +62,8 @@ def handle(conn, addr):
     conn.settimeout(3)
     try:
         data = conn.recv(1024).decode('utf8')
+        logging.info('Client [%s]: data: "%s"' % (':'.join(map(str, addr)), data.strip()))
+
         check = check_data(data)
         if check:
             conn.send(('"%s" is Not Allowed!' % check).encode('utf8'))
@@ -75,13 +77,16 @@ def handle(conn, addr):
                 try:
                     p.terminate()
                     conn.send(b'TimeOut Error!')
+                    logging.info('Client [%s]: TimeOut: too long command execution' % ':'.join(map(str, addr)))
                 except:
-                    print('Client [%s]: TimeOut: too long command execution' % ':'.join(map(str, addr)))
-
-            print('Client [%s]: OK' % ':'.join(map(str, addr)))
+                    pass
+            else:
+                logging.info('Client [%s]: OK' % ':'.join(map(str, addr)))
+            
             during.remove(p)
     except:
-        print('Client [%s]: TimeOut: no data receive' % ':'.join(map(str, addr)))
+        conn.send(b'No data receive')
+        logging.info('Client [%s]: TimeOut: no data receive' % ':'.join(map(str, addr)))
     finally:
         conn.close()
 
@@ -133,13 +138,8 @@ if __name__ == '__main__':
     while True:
         try:
             conn, addr = sock.accept()
-<<<<<<< HEAD
-            print('Client connected [%s]' % ':'.join(map(str, addr)))
+            logging.info('Client connected [%s]' % ':'.join(map(str, addr)))
             connected.put((conn, addr))
-=======
-            logging.info("Client connected [%s]" % ':'.join(map(str, addr)))
-            connected.put(conn)
->>>>>>> e9269e74018d3c819cf08aa4db9a67ec97624e9c
         except KeyboardInterrupt:
             logging.info('Server Stopped')
             try:
