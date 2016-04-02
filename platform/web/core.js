@@ -70,7 +70,10 @@ function createObjectsOnMaze(scene, maze, compositId, objects){
     var spriteManagerTeleports = new BABYLON.SpriteManager('teleportsManager', './textures/teleport.png', 550, 64, scene);
     var spriteManagerGirls = new BABYLON.SpriteManager("girlsManager", "./textures/girls.png", 550, 48, scene);
     var spriteManagerFences = new BABYLON.SpriteManager("fencesManager", "./textures/fences.png", 550, 64, scene);
+
     var spriteManagerDragons = new BABYLON.SpriteManager("dragonsManager", "./textures/dragons.png", 550, 64, scene);
+    var spriteManagerDragons1 = new BABYLON.SpriteManager("dragonsManager1", "./textures/dragon1.png", 550, 64, scene);
+    var spriteManagerDragons2 = new BABYLON.SpriteManager("dragonsManager2", "./textures/dragons2.png", 550, 64, scene);
 
     var typesFunctions = [];
     objects['keys'] = [];
@@ -123,19 +126,52 @@ function createObjectsOnMaze(scene, maze, compositId, objects){
     };
 
     typesFunctions["dragon"] = function(i, j, id) { 
-        var dragon = new BABYLON.Sprite(compositId + "Dragon" + id, spriteManagerDragons);
+
+        var dr_idx = Math.floor(Math.random() * (5 + 1));
+        if (dr_idx < 3)
+        {
+            var dragon = new BABYLON.Sprite(compositId + "Dragon" + id, spriteManagerDragons);
+            idx = Math.floor(Math.random() * (2 + 1));
+            dragon.playAnimation(idx * 4, idx * 4 + 3, true, 400);
+            dragon.size = cellSize;
+
+        }
+        else if (dr_idx == 4)
+        {
+            var dragon = new BABYLON.Sprite(compositId + "Dragon" + id, spriteManagerDragons1);
+            dragon.cellIndex = 0;
+            dragon.size = cellSize;
+        }
+        else
+        {
+            var dragon = new BABYLON.Sprite(compositId + "Dragon" + id, spriteManagerDragons2);
+            dragon.playAnimation(0, 13, true, 400);
+            dragon.size = cellSize*1.8;
+        }
+        // dragon.cellIndex = idx;
         dragon.position.x = i * cellSize;
         dragon.position.z = j * cellSize;
         dragon.position.y = 1;
-        dragon.size = cellSize;
-
-        idx = Math.floor(Math.random() * (2 + 1));
-        console.log(idx);
-        // dragon.cellIndex = idx;
-
-        dragon.playAnimation(idx * 4, idx * 4 + 3, true, 400);
 
         objects["dragons"][compositId + "Dragon" + id] = dragon;
+    };
+
+    typesFunctions["fence"] = function(i, j, id) { 
+        var fence = new BABYLON.Sprite(compositId + "Fence" + id, spriteManagerFences);
+        fence.position.x = i * cellSize;
+        fence.position.z = j * cellSize;
+        fence.position.y = 1;
+        fence.size = cellSize;
+
+        if (maze[i][j]["orientation"] == "rights")
+            idx = 0;
+        if (maze[i][j]["orientation"] == "up")
+            idx = 1;
+        if (maze[i][j]["orientation"] == "left")
+            idx = 2;
+        fence.cellIndex = idx;
+
+        objects["fences"][compositId + "Fence" + id] = fence;
     };
 
     typesFunctions['empty'] = function(i, j, id) { };
