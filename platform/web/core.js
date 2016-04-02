@@ -1,4 +1,3 @@
-
 var cellSize = 2;
 
 var canvas = document.getElementById('renderCanvas');
@@ -260,11 +259,11 @@ function keyHandler(xFactor, zFactor) {
                 deltaX = sameTeleport.position.x - sunnySceneObjects.player.position.x;
                 deltaZ = sameTeleport.position.z - sunnySceneObjects.player.position.z;
 
-                catacombSceneObjects.player.position.x += deltaX;
-                catacombSceneObjects.player.position.z += deltaZ;
+                sunnySceneObjects.player.position.x += deltaX;
+                sunnySceneObjects.player.position.z += deltaZ;
 
-                catacombSceneObjects.camera.position.x += deltaX;
-                catacombSceneObjects.camera.position.z += deltaZ;
+                sunnySceneObjects.camera.position.x += deltaX;
+                sunnySceneObjects.camera.position.z += deltaZ;
 
                 currentConfiguration = sunnySceneObjects;
                 activeScene = 0;
@@ -288,9 +287,6 @@ function keyHandler(xFactor, zFactor) {
                 catacombSceneObjects.light.position.x += deltaX;
                 catacombSceneObjects.light.position.z += deltaZ;
 
-                console.log(catacombSceneObjects.camera.position)
-                console.log(sunnySceneObjects.camera.position)
-
                 currentConfiguration = catacombSceneObjects;
                 activeScene = 1;
             }
@@ -302,7 +298,6 @@ function keyHandler(xFactor, zFactor) {
         activeSceneChange = false;
     }
 }
-
     
 function map_loaded(maze)
 {
@@ -409,7 +404,6 @@ function map_loaded(maze)
         else {
             var player = catacombSceneObjects.player;
             for (var obj_type in catacombSceneObjects.objects) {
-                console.log(obj_type);
                 for (var obj_key in catacombSceneObjects.objects[obj_type]) {
                     var obj = catacombSceneObjects.objects[obj_type][obj_key];
                     var delta_x = obj.position.x - player.position.x;
