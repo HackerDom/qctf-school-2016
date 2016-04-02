@@ -68,7 +68,7 @@ function createObjectsOnMaze(scene, maze, compositId, objects){
     var spriteManagerKeys = new BABYLON.SpriteManager('keysManager', './textures/key.png', 550, 64, scene);
 
     var spriteManagerTeleports = new BABYLON.SpriteManager('teleportsManager', './textures/teleport.png', 550, 64, scene);
-    var spriteManagerGirls = new BABYLON.SpriteManager("girlsManager", "./textures/girls.png", 550, 64, scene);
+    var spriteManagerGirls = new BABYLON.SpriteManager("girlsManager", "./textures/girls.png", 550, 48, scene);
     var spriteManagerFences = new BABYLON.SpriteManager("fencesManager", "./textures/fences.png", 550, 64, scene);
     var spriteManagerDragons = new BABYLON.SpriteManager("dragonsManager", "./textures/dragons.png", 550, 64, scene);
 
@@ -129,9 +129,12 @@ function createObjectsOnMaze(scene, maze, compositId, objects){
         dragon.position.y = 1;
         dragon.size = cellSize;
 
-        idx = Math.floor(Math.random() * (15 + 1));
-        dragon.cellIndex = idx;
-        
+        idx = Math.floor(Math.random() * (2 + 1));
+        console.log(idx);
+        // dragon.cellIndex = idx;
+
+        dragon.playAnimation(idx * 4, idx * 4 + 3, true, 400);
+
         objects["dragons"][compositId + "Dragon" + id] = dragon;
     };
 
@@ -260,11 +263,11 @@ function keyHandler(xFactor, zFactor) {
                 deltaX = sameTeleport.position.x - sunnySceneObjects.player.position.x;
                 deltaZ = sameTeleport.position.z - sunnySceneObjects.player.position.z;
 
-                catacombSceneObjects.player.position.x += deltaX;
-                catacombSceneObjects.player.position.z += deltaZ;
+                sunnySceneObjects.player.position.x += deltaX;
+                sunnySceneObjects.player.position.z += deltaZ;
 
-                catacombSceneObjects.camera.position.x += deltaX;
-                catacombSceneObjects.camera.position.z += deltaZ;
+                sunnySceneObjects.camera.position.x += deltaX;
+                sunnySceneObjects.camera.position.z += deltaZ;
 
                 currentConfiguration = sunnySceneObjects;
                 activeScene = 0;
@@ -288,9 +291,6 @@ function keyHandler(xFactor, zFactor) {
                 catacombSceneObjects.light.position.x += deltaX;
                 catacombSceneObjects.light.position.z += deltaZ;
 
-                console.log(catacombSceneObjects.camera.position)
-                console.log(sunnySceneObjects.camera.position)
-
                 currentConfiguration = catacombSceneObjects;
                 activeScene = 1;
             }
@@ -302,7 +302,6 @@ function keyHandler(xFactor, zFactor) {
         activeSceneChange = false;
     }
 }
-
     
 function map_loaded(maze)
 {
