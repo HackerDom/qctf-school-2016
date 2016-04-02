@@ -1,3 +1,4 @@
+
 var cellSize = 2;
 
 var canvas = document.getElementById('renderCanvas');
@@ -67,13 +68,18 @@ function createObjectsOnMaze(scene, maze, compositId, objects){
     var spriteManagerKeys = new BABYLON.SpriteManager('keysManager', './textures/key.png', 550, 64, scene);
 
     var spriteManagerTeleports = new BABYLON.SpriteManager('teleportsManager', './textures/teleport.png', 550, 64, scene);
+    var spriteManagerGirls = new BABYLON.SpriteManager("girlsManager", "./textures/girls.png", 550, 48, scene);
+    var spriteManagerFences = new BABYLON.SpriteManager("fencesManager", "./textures/fences.png", 550, 64, scene);
+    var spriteManagerDragons = new BABYLON.SpriteManager("dragonsManager", "./textures/dragons.png", 550, 64, scene);
 
     var typesFunctions = [];
     objects['keys'] = [];
     objects['trees'] = []
     objects['stones'] = [];
-    objects['activePoints'] = [];
-    objects['teleports'] = [];
+    objects["girls"] = [];
+    objects["teleports"] = [];
+    objects["fences"] = [];
+    objects["dragons"] = [];
 
     typesFunctions['tree'] = function(i, j, id) {
         var tree = new BABYLON.Sprite(compositId + 'Tree' + id, spriteManagerTrees);
@@ -102,8 +108,34 @@ function createObjectsOnMaze(scene, maze, compositId, objects){
         key.showBoundingBox = true;
         objects['keys'][compositId + 'Key' + id] = key;
     };
-    typesFunctions['activePoint'] = function(i, j, id) { 
-        objects['activePoints'][compositId + 'ActivePoint' + id] = (i, j);
+    
+    typesFunctions["girl"] = function(i, j, id) { 
+        var girl = new BABYLON.Sprite(compositId + "Girl" + id, spriteManagerGirls);
+        girl.position.x = i * cellSize;
+        girl.position.z = j * cellSize;
+        girl.position.y = 1;
+        girl.size = cellSize;
+
+        idx = Math.floor(Math.random() * (15 + 1));
+        girl.cellIndex = idx;
+
+        objects["girls"][compositId + "Girl" + id] = girl;
+    };
+
+    typesFunctions["dragon"] = function(i, j, id) { 
+        var dragon = new BABYLON.Sprite(compositId + "Dragon" + id, spriteManagerDragons);
+        dragon.position.x = i * cellSize;
+        dragon.position.z = j * cellSize;
+        dragon.position.y = 1;
+        dragon.size = cellSize;
+
+        idx = Math.floor(Math.random() * (2 + 1));
+        console.log(idx);
+        // dragon.cellIndex = idx;
+
+        dragon.playAnimation(idx * 4, idx * 4 + 3, true, 400);
+
+        objects["dragons"][compositId + "Dragon" + id] = dragon;
     };
 
     typesFunctions['empty'] = function(i, j, id) { };
@@ -114,7 +146,7 @@ function createObjectsOnMaze(scene, maze, compositId, objects){
         teleport.position.z = j * cellSize;
         teleport.position.y = 1;
         teleport.size = cellSize;
-        teleport.playAnimation(0, 15, true, 100);
+        teleport.playAnimation(8, 14, true, 200);
         objects['teleports'][compositId + 'Teleport' + id] = teleport;
     };
 
@@ -172,6 +204,7 @@ function createCatacombScene(maze, playerPosition){
 }
 
 function move(player, camera, xFactor, zFactor) {
+    hidePopup();
     player.position.x += cellSize*xFactor;
     camera.position.x += cellSize*xFactor;
     player.position.z += cellSize*zFactor;
@@ -180,6 +213,19 @@ function move(player, camera, xFactor, zFactor) {
     {
         currentConfiguration.light.position.x += cellSize*xFactor;
         currentConfiguration.light.position.z += cellSize*zFactor;
+    }
+
+    var maze = currentConfiguration['maze'];
+
+    var neighbors = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+
+    for (var i = 0; i < 4; i++)
+    {
+        var cell = maze[parseInt(player.position.x / cellSize) + neighbors[i][0]][parseInt(player.position.z/cellSize) + neighbors[i][1]];
+        if (cell['type'] == 'dragon')
+        {
+            talk(cell['id']);
+        }
     }
 }
 
@@ -201,11 +247,7 @@ function keyHandler(xFactor, zFactor) {
     {
         move(player, camera, xFactor, zFactor);
     }
-    if (cell['type'] == 'activePoint')
-    {
-        move(player, camera, xFactor, zFactor);
-        activePointFunction();
-    }
+
     if (cell['type'] == 'teleport')
     {
         move(player, camera, xFactor, zFactor);
@@ -221,11 +263,11 @@ function keyHandler(xFactor, zFactor) {
                 deltaX = sameTeleport.position.x - sunnySceneObjects.player.position.x;
                 deltaZ = sameTeleport.position.z - sunnySceneObjects.player.position.z;
 
-                catacombSceneObjects.player.position.x += deltaX;
-                catacombSceneObjects.player.position.z += deltaZ;
+                sunnySceneObjects.player.position.x += deltaX;
+                sunnySceneObjects.player.position.z += deltaZ;
 
-                catacombSceneObjects.camera.position.x += deltaX;
-                catacombSceneObjects.camera.position.z += deltaZ;
+                sunnySceneObjects.camera.position.x += deltaX;
+                sunnySceneObjects.camera.position.z += deltaZ;
 
                 currentConfiguration = sunnySceneObjects;
                 activeScene = 0;
@@ -248,9 +290,6 @@ function keyHandler(xFactor, zFactor) {
 
                 catacombSceneObjects.light.position.x += deltaX;
                 catacombSceneObjects.light.position.z += deltaZ;
-
-                console.log(catacombSceneObjects.camera.position)
-                console.log(sunnySceneObjects.camera.position)
 
                 currentConfiguration = catacombSceneObjects;
                 activeScene = 1;
@@ -369,7 +408,6 @@ function map_loaded(maze)
         else {
             var player = catacombSceneObjects.player;
             for (var obj_type in catacombSceneObjects.objects) {
-                console.log(obj_type);
                 for (var obj_key in catacombSceneObjects.objects[obj_type]) {
                     var obj = catacombSceneObjects.objects[obj_type][obj_key];
                     var delta_x = obj.position.x - player.position.x;

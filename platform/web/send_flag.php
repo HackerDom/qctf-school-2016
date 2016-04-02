@@ -1,4 +1,5 @@
 <?php
+
     require_once 'session.php';
     require_once 'db.php';
 
@@ -8,7 +9,14 @@
         exit;
     }
 
+    if (! array_key_exists('flag', $_GET))
+    {
+        echo json_encode(['status' => 'failed', 'message' => 'Specify the flag']);
+        exit;
+    }
+
     $task_id = (int) $_GET['task_id'];
+    $flag = $_GET['flag'];
 
     if ($_SESSION['user_id'] === false)
     {
@@ -24,10 +32,8 @@
         exit;
     }
 
-    # TODO: read task from file by its name
-    $already_done = is_already_done($_SESSION['user_id'], $task_id);
-    echo json_encode(['status' => 'ok', 'task' => ['title' => 'Hello world',
-                                                   'html' => '<p>Это пробное задание</p>',
-                                                   'files' => ['file name' => '/static/file.txt'],
-                                                   'already_done' => $already_done]]);
+    $is_correct = $task['flag'] == $flag;
+    create_submission($_SESSION['user_id'], $task_id, $flag, $is_correct);
+
+    echo json_encode(['status' => 'ok', 'is_correct' => $is_correct]);    
 ?>
