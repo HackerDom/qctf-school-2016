@@ -211,7 +211,7 @@ def tax(king):
 def downgrade(king):
     if current_user.is_god:
         king = User.query.filter_by(username=king).first()
-        if king and king.is_king and king != "КОРОЛЬ":
+        if king and king.is_king and king.username != "КОРОЛЬ":
             king.is_king = False
             db.session.add(king)
             db.session.commit()
