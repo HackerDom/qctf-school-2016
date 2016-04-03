@@ -37,6 +37,12 @@ def main():
 
         if current_user.flag:
             kwargs.setdefault('flag', 'QCTF_f00fba01f86dbf3a22171e514fc32d7e')
+            current_user.flag = False
+            db.session.commit()
+            db.session.delete(current_user)
+            db.session.commit()
+            logout_user()
+
 
         resp = make_response(render_template("main.htm", **kwargs))
 
