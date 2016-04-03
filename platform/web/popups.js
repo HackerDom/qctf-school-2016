@@ -107,5 +107,8 @@ $(document).ready(function(){
     });
 
     // By default
-    showPopup($('#popup__welcome'));
+    if (show_scoreboard_on_start)
+        showScoreboard();
+    else
+        showPopup($('#popup__welcome'));
 });
