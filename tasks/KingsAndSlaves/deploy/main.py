@@ -169,7 +169,7 @@ def king():
 @app.route("/profile/kill")
 @login_required
 def killing():
-    if current_user.username == "КОРОЛЬ":
+    if current_user.username == "КОРОЛЬ" or current_user.username.startswith("БОГ"):
         flash("Вы бессмертны и не можете погибнуть. Мучайтесь.")
         return redirect(url_for("profile", person=current_user.username))
     User.query.filter_by(username=current_user.username).delete()
@@ -183,7 +183,7 @@ def killing():
 @app.route("/profile/<king>/tax")
 @login_required
 def tax(king):
-    if current_user.username == "КОРОЛЬ":
+    if current_user.username == "КОРОЛЬ" or current_user.username.startswith("БОГ"):
         flash("Нельзя.")
         redirect(url_for("profile", person=king.username))
     king = User.query.filter_by(username=king).first()
