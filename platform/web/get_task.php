@@ -25,6 +25,10 @@
     }
 
     $task_html = file_get_contents('tasks/' . $task['name'] . '/task.html');
+    if (file_exists('tasks/' . $task['name'] . '/name.html'))
+        $task_name = file_get_contents('tasks/' . $task['name'] . '/name.html');
+    else
+        $task_name = '';
     $task_files = scandir('tasks/' . $task['name'] . '/user');
 
     $files = [];
@@ -36,7 +40,7 @@
     }
 
     $already_done = is_already_done($_SESSION['user_id'], $task_id);
-    echo json_encode(['status' => 'ok', 'task' => ['title' => 'Hello world',
+    echo json_encode(['status' => 'ok', 'task' => ['title' => $task_name,
                                                    'html' => $task_html,
                                                    'files' => $files,
                                                    'already_done' => $already_done]]);
