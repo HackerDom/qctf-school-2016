@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import hashlib
 from flask import Flask, render_template, redirect, url_for, request, flash, abort
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -119,7 +121,7 @@ def register():
 @login_required
 def edit(person):
     form = EditForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit() and person != "КОРОЛЬ":
         person = User.query.filter_by(username=person).first()
         if person:
             person.set_password(form.password.data)
@@ -144,7 +146,7 @@ def profile(person):
 @app.route("/profile/secret")
 @login_required
 def secret():
-    if current_user.is_king:
+    if current_user.is_king and current_user.username != "КОРОЛЬ":
         if current_user.money >= 100000:
             current_user.money -= 100000
             flash("Секрет: {0}".format(app.config["SECRET_KEY"]))
@@ -181,10 +183,15 @@ def killing():
 @app.route("/profile/<king>/tax")
 @login_required
 def tax(king):
+    if current_user.username == "КОРОЛЬ":
+        flash("Нельзя.")
+        redirect(url_for("profile", person=king.username))
     king = User.query.filter_by(username=king).first()
     if king and king.is_king:
         if king.money <= 1000000:
             king.money += 100
+        else:
+            king.money = 100000
         current_user.money -= 100
         db.session.add(king)
         db.session.add(current_user)
@@ -204,7 +211,7 @@ def tax(king):
 def downgrade(king):
     if current_user.is_god:
         king = User.query.filter_by(username=king).first()
-        if king and king.is_king:
+        if king and king.is_king and king != "КОРОЛЬ":
             king.is_king = False
             db.session.add(king)
             db.session.commit()
