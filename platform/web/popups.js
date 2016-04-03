@@ -111,4 +111,9 @@ $(document).ready(function(){
         showScoreboard();
     else
         showPopup($('#popup__welcome'));
+
+    $('.popup__background').click(function() {
+        if ($('.popup').find('.closable').length)
+            hidePopup();
+    });
 });

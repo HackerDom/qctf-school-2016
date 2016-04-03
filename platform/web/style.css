@@ -166,3 +166,8 @@ a.file:hover {
     vertical-align: top;
     padding-top: 4px;
 }
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}

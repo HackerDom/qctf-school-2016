@@ -39,6 +39,17 @@
         $files[$task_file] = '/files/' . $task_id . '/' . $task_file;
     }
 
+    if (strstr($task_html, '{ID}') !== false)
+    {
+        if ($_SESSION['user_id'] > 76)
+            $task_html = '<b>Это задание недоступно для участников вне конкурса</b>';
+        else 
+        {
+            $task_html = str_replace('{ID}', $_SESSION['user_id'], $task_html);
+            $task_html = str_replace('{HASH}', md5('broadcastlinux_team_'.$_SESSION['user_id'].'_salt'), $task_html);
+        }
+    }
+
     $already_done = is_already_done($_SESSION['user_id'], $task_id);
     echo json_encode(['status' => 'ok', 'task' => ['title' => $task_name,
                                                    'html' => $task_html,

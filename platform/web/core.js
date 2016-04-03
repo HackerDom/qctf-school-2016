@@ -226,7 +226,7 @@ function createCatacombScene(maze, playerPosition){
     var camera = createCamera(scene, player);
 
     // id, position, direction, angle, exponent
-    var light = new BABYLON.SpotLight('catacombLight', new BABYLON.Vector3(player.position.x, 20, player.position.z), new BABYLON.Vector3(0, -1, 0), 1, 30, scene);
+    var light = new BABYLON.SpotLight('catacombLight', new BABYLON.Vector3(player.position.x, 35, player.position.z), new BABYLON.Vector3(0, -1, 0), 1, 30, scene);
 
     catacombSceneObjects.player = player;
     catacombSceneObjects.camera = camera;
@@ -448,7 +448,7 @@ function map_loaded(maze)
                     var obj = catacombSceneObjects.objects[obj_type][obj_key];
                     var delta_x = obj.position.x - player.position.x;
                     var delta_z = obj.position.z - player.position.z;
-                    if (delta_x * delta_x + delta_z * delta_z > 50)
+                    if (delta_x * delta_x + delta_z * delta_z > 100)
                         obj.width = 0;
                     else
                         obj.width = 2;

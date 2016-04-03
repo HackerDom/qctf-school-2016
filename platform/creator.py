@@ -10,15 +10,24 @@ def write_file(filename, data):
     with open(filename, 'w') as f:
         f.write(data)
 
+tree_index = 0
+empty_index = 0
+key_index = 0
+stone_index = 0
+dragon_index = 0
+girl_index = 0
+
 def create_maze(sym_maze, option):
-    maze = []
-    tree_index = 0
-    empty_index = 0
+    global tree_index
+    global empty_index
+    global key_index
+    global stone_index
+    global girl_index
+    global dragon_index
+
     teleport_index = 0
-    key_index = 0
-    stone_index = 0
-    dragon_index = 0
-    girl_index = 0
+
+    maze = []
     for line in sym_maze:
         maze_line = []
         for symb in line:
@@ -32,7 +41,7 @@ def create_maze(sym_maze, option):
                 maze_line.append({"id" : empty_index, "type" : "empty"})
                 empty_index += 1
             elif symb == '.':
-                if (random.randint(0,100) % 30 == 0 and option == 1) or (random.randint(0,100) % 4 == 0 and option == 2):
+                if (random.randint(0,100) % 30 == 0 and option == 1) or (random.randint(0,100) % 10 == 0 and option == 2):
                     maze_line.append({"id" : stone_index, "type" : "stone"})
                     stone_index += 1
                 elif random.randint(0,100) % 30 == 0 and option == 1:
@@ -65,3 +74,4 @@ if __name__ == "__main__":
     catacomb_maze = read_file("catacomb_maze.txt")
     catacomb_maze = create_maze(catacomb_maze, 2)
     write_file("maze.txt", json.dumps({'sunnyMaze' : maze, "catacombMaze" : catacomb_maze, "playerPosition" : {"x" : 35, "z" : 60}}))
+    print(dragon_index)
