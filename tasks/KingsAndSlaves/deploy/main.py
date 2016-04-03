@@ -183,9 +183,6 @@ def killing():
 @app.route("/profile/<king>/tax")
 @login_required
 def tax(king):
-    if current_user.username == "КОРОЛЬ" or current_user.username.startswith("БОГ"):
-        flash("Нельзя.")
-        redirect(url_for("profile", person=king.username))
     king = User.query.filter_by(username=king).first()
     if king and king.is_king:
         if king.money <= 1000000:
