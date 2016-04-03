@@ -49,7 +49,7 @@ function createGround(scene, groundTextureFile, groundId, maze){
     ground.position.x = -cellSize / 2 + width / 2;
     ground.position.z = -cellSize / 2 + height / 2;
     var materialGround = new BABYLON.StandardMaterial('groundTexture', scene);
-    materialGround.diffuseTexture = new BABYLON.Texture('./textures/grass3.png', scene);
+    materialGround.diffuseTexture = new BABYLON.Texture(groundTextureFile, scene);
     materialGround.diffuseTexture.hasAlpha = true;
     materialGround.diffuseTexture.uScale = width / cellSize;
     materialGround.diffuseTexture.vScale = height / cellSize;

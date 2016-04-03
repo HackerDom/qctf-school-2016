@@ -40,7 +40,6 @@ function talk(task_id) {
 
             $('.popup button').click(function() {
                 var answer = $('.popup input').val()
-                // TODO: urlencode
                 $.getJSON('send_flag.php?task_id=' + task_id + '&flag=' + answer, function (data) {
                     if (data.status == 'ok') {
                         if (data.is_correct) {
@@ -55,13 +54,13 @@ function talk(task_id) {
                             $status.slideUp();
                         }, 2000);
                     } else {
-                         // TODO
+                        alert(data.message);
                     }
                 });
             });
 
         } else {
-            // TODO
+            alert(data.message);
         }
     });
 }
@@ -96,7 +95,7 @@ $(document).ready(function(){
             'password': password,
         }, function (data) {
             if (data.status != 'ok') {
-                alert('Неправильный пароль :(');
+                alert('Неправильный пароль :-(  Возможно, тур ещё не начался, подождите.');
             } else {
                 showPopup($('#popup__loading'));
                 $.getJSON('maze.txt', function (data) {

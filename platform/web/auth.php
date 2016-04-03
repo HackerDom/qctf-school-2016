@@ -7,7 +7,7 @@ function can_auth($login, $password)
 {
     global $db;
 
-    $stmt = $db->prepare('SELECT * FROM users WHERE login = ? AND password = ?');
+    $stmt = $db->prepare('SELECT * FROM users WHERE login = ? AND password = ? AND start_time <= CURRENT_TIMESTAMP()');
     $stmt->bind_param('ss', $login, $password);
     $stmt->execute();
 

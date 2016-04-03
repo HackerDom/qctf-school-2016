@@ -24,10 +24,20 @@
         exit;
     }
 
-    # TODO: read task from file by its name
+    $task_html = file_get_contents('tasks/' . $task['name'] . '/task.html');
+    $task_files = scandir('tasks/' . $task['name'] . '/user');
+
+    $files = [];
+    foreach ($task_files as $task_file)
+    {
+        if ($task_file == '.' || $task_file == '..')
+            continue;
+        $files[$task_file] = '/files/' . $task_id . '/' . $task_file;
+    }
+
     $already_done = is_already_done($_SESSION['user_id'], $task_id);
     echo json_encode(['status' => 'ok', 'task' => ['title' => 'Hello world',
-                                                   'html' => '<p>Это пробное задание</p>',
-                                                   'files' => ['file name' => '/static/file.txt'],
+                                                   'html' => $task_html,
+                                                   'files' => $files,
                                                    'already_done' => $already_done]]);
 ?>

@@ -13,7 +13,7 @@ html, body {
 }
 
 .popup__background {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     left: 0;
@@ -114,6 +114,7 @@ a.file {
     text-decoration: none;
     color: #eee;
     border-radius: 4px;
+    margin-right: 15px;
 }
 
 a.file:hover {
